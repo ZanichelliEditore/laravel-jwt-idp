@@ -25,10 +25,8 @@ Route::get('locale/{locale}', function ($locale){
 
 Route::get('loginForm', 'JwtAuth\LoginController@showLoginForm')->name('loginForm');
 
+Route::get('registerForm', 'JwtAuth\RegisterController@showRegisterForm')->name('registerForm');
 
-//Route::get('registerForm', 'JwtAuth\RegisterController@showRegisterForm')->name('registerForm');
-
-//Route::post('register', 'JwtAuth\RegisterController@register')->name('register');
 
 
 

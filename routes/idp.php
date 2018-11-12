@@ -21,22 +21,7 @@ Route::prefix('v1')->group( function() {
     Route::middleware('api')->get('/logout', 'JwtAuth\LoginController@logout');
 
     Route::middleware('web')->post('/login', 'JwtAuth\LoginController@login')->name('login');
-    //Route::middleware('web')->post('/register', 'JwtAuth\RegisterController@register')->name('register');
-
-    // Routes to manage users
-    Route::middleware(['client:manage-user'])->group(function(){
-
-        Route::put('user', 'Manage\UserController@create');
-
-        Route::get('user/available/{username}', 'Manage\UserController@availableUsername');
-
-    });
-
-    Route::middleware('client')->group(function(){
-
-        Route::get('roles', 'Manage\RoleController@all');
-
-    });
+    Route::middleware('web')->post('/register', 'JwtAuth\RegisterController@register')->name('register');
 
 });
 
