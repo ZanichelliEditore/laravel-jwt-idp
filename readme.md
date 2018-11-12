@@ -10,6 +10,12 @@ with a middleware that checks if the user exists in the session. If the user is 
 redirect the user to the IDP login. After the login success the IDP will redirect the user to the
 application passing a token. The application must use that token to retrieve the user data.
 
+### Installation
+- Clone the project
+- Duplicate the file .env.example and change the name in .env
+- In the root the project execute ``composer install``
+- In the project root execute the command ``php artisan key:generate``
+
 ### Routes
 GET Requests
 
