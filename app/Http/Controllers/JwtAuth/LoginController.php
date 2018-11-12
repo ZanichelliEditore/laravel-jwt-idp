@@ -75,8 +75,8 @@ class LoginController extends Controller {
     public function login(Request $request){
 
         /**
-         * Viene effettuata una redirect se non sono presenti username e password
-         * e se la chiamata NON ha nel header "Accept application/json".
+         * Redirect if request haven't username or password and the request
+         * haven't "Accept application/json" header.
          */
         if(!$request->has(['username', 'password']) && !$request->wantsJson()){
             redirect()->route('loginForm');
@@ -84,10 +84,6 @@ class LoginController extends Controller {
 
         $credentials = $request->only('username', 'password');
 
-        /**
-         * Effettuo la validazione dei campi. Se si verifica un errore
-         * torno alla pagina di login re-impostando la query nell'url.
-         */
         $validator = $this->validator($credentials);
         if($validator->fails()){
             return $this->createResponse(
@@ -113,7 +109,7 @@ class LoginController extends Controller {
         }
 
         $user = JWTAuth::user();
-        // Check if user is verified only fot not employee
+
         if(!$user->is_verified){
             $message = [
                 'message' => __('auth.err-verification')
