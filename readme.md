@@ -40,7 +40,8 @@ it can be usefull in a context with RBAC (Role-based access control).
 ### User structure
 
 ```json
-"user": {
+{
+    "user": {
         "id": 1,
         "username": "mario.rossi",
         "email": "mario.rossi@example.com",
@@ -59,5 +60,6 @@ it can be usefull in a context with RBAC (Role-based access control).
                 "roleName": "ADMIN"
             }
         ]
-    }, 
+    }
+}
 ```
