@@ -169,15 +169,23 @@ class LoginController extends Controller {
         try {
 
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
+                return response()->json([
+                    'message' => 'User not found'
+                ], 404);
             }
 
         } catch (TokenExpiredException $e) {
-            return response()->json(['token_expired'], 403);
+            return response()->json([
+                'message' => 'Token expired'
+            ], 403);
         } catch (TokenInvalidException $e) {
-            return response()->json(['token_invalid'], 403);
+            return response()->json([
+                'message' => 'Invalid token'
+            ], 403);
         } catch (JWTException $e) {
-            return response()->json(['token_absent'], 403);
+            return response()->json([
+                'message' => 'Token absent'
+            ], 403);
         }
 
         $userResource = UserResource::make($user);
@@ -215,7 +223,9 @@ class LoginController extends Controller {
         try {
 
             if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
+                return response()->json([
+                    'message' => 'User not found'
+                ], 404);
             }
 
         } catch (TokenExpiredException $e) {
@@ -232,13 +242,14 @@ class LoginController extends Controller {
             ], 403);
         }
 
-        $publisher = Publisher::create([
-            // Channels to notify
-        ], $user);
-
-        $publisher->send([
-            'user_id' => $user->id
-        ]);
+        // Decomment to send a message to queues with rabbitmq
+//        $publisher = Publisher::create([
+//            // Channels to notify
+//        ], $user);
+//
+//        $publisher->send([
+//            'user_id' => $user->id
+//        ]);
 
         JWTAuth::parseToken()->refresh();
         auth()->logout();
