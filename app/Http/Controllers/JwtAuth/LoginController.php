@@ -12,7 +12,6 @@ use App\Events\LoginEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\Publisher;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
