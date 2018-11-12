@@ -1,0 +1,37 @@
+body {
+    background-color: #ffffff;
+}
+
+#login-form-panel, #register-form-panel {
+    width: 600px;
+    max-width: 600px;
+    min-width: 500px;
+    overflow: hidden;
+    margin: 80px auto 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+}
+
+.logo-form-zanichelli {
+    margin-bottom: 50px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#panel-errors-login {
+    margin-top: 30px;
+}
+
+#button-submit-login {
+    display: block;
+    width: 180px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
