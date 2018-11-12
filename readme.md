@@ -23,4 +23,35 @@ POST Requests
 - **/v1/register** register the user into the IDP. Parameters: "username", "email", "password", "password_confirmation", "name", "surname"
 
 ### Views
-There are 2 default views: login form and register form. 
+There are 2 default views: login form and register form.
+
+### Database
+The IDP manages users using 3 table: users, users_roles, roles.
+In the users tables are stored basic users data like email, username, password,
+name, surname, is_verified. Each user can have a role or many roles associated;
+it can be usefull in a context with RBAC (Role-based access control).
+
+### User structure
+
+```json
+"user": {
+        "id": 1,
+        "username": "mario.rossi",
+        "email": "mario.rossi@example.com",
+        "is_verified": 1,
+        "name": "Mario",
+        "surname": "Rossi",
+        "created_at": "2018-09-14 12:30:20",
+        "updated_at": null,
+        "roles": [
+            {
+                "roleId": 1,
+                "roleName": "USER"
+            },
+            {
+                "roleId": 2,
+                "roleName": "ADMIN"
+            }
+        ]
+    }, 
+```
