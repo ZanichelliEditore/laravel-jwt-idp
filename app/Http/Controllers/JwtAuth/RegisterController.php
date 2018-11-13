@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\JwtAuth;
 
-use App\Events\RegistrationEvent;
+use App\Exceptions\SqlException;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Account\User;
+use App\Services\Interfaces\IAccountService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -18,6 +18,15 @@ use Illuminate\Support\Facades\Validator;
  */
 class RegisterController extends Controller {
 
+    private $accountService;
+
+    public function __construct(IAccountService $accountService){
+        $this->accountService = $accountService;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showRegisterForm(){
         return view('auth.register');
     }
@@ -29,6 +38,7 @@ class RegisterController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request){
+
         $credentials = $request->only('email', 'password', 'password_confirmation', 'name', 'surname');
 
         $validator = $this->validator($credentials);
@@ -39,15 +49,24 @@ class RegisterController extends Controller {
             ]);
         }
 
-        $user = $this->createUser($credentials);
-        $verificationCode = $this->createVerificationCode($user);
-
-        event(new RegistrationEvent($user, $verificationCode));
+        try {
+            $this->accountService->registerUser('', '', '', '', '');
+        } catch (SqlException $e) {
+            return response()->json([]);
+        }
 
         return $this->createJsonResponse([
             'success' => true,
             'message' => __('registration.success')
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param $code
+     */
+    public function verify(Request $request, $code){
+        // TODO verify the user
     }
 
     /*
@@ -75,22 +94,6 @@ class RegisterController extends Controller {
         ]);
 
         return $verificationCode;
-    }
-
-    /**
-     * Returns a new user instance
-     *
-     * @param array $credentials
-     * @return User
-     */
-    private function createUser(array $credentials){
-        return User::create([
-            'username' => $credentials['email'],
-            'email' => $credentials['email'],
-            'password' => Hash::make($credentials['password']),
-            'name' => $credentials['name'],
-            'surname' => $credentials['surname']
-        ]);
     }
 
     private function createJsonResponse(array $data){

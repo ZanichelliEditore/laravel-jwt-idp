@@ -6,9 +6,10 @@
  * Time: 12.38
  */
 
-namespace App\Models;
+namespace App\Models\Notification;
 
 
+use App\Models\Account\User;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 

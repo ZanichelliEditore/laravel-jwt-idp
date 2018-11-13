@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Account;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,7 +29,7 @@ class User extends Authenticatable implements JWTSubject {
     ];
 
     public function roles(){
-        return $this->hasMany('App\Models\UserRole', 'user_id');
+        return $this->hasMany('App\Models\Account\UserRole', 'user_id');
     }
 
     /**

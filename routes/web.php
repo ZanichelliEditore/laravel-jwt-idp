@@ -27,6 +27,8 @@ Route::get('loginForm', 'JwtAuth\LoginController@showLoginForm')->name('loginFor
 
 Route::get('registerForm', 'JwtAuth\RegisterController@showRegisterForm')->name('registerForm');
 
+Route::get('verificationCode/{code}', 'JWTAuth\RegisterController@verify')->name('verification-account');
+
 
 
 
