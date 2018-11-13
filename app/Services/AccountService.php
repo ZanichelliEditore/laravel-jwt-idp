@@ -67,4 +67,11 @@ class AccountService implements IAccountService {
         event(new RegistrationEvent($user, $verificationCode));
     }
 
+    /**
+     * @param string $verificationCode
+     */
+    public function verifyUser(string $verificationCode){
+        // TODO: Implement verifyUser() method.
+    }
+
 }

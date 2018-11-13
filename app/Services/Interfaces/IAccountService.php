@@ -19,8 +19,14 @@ interface IAccountService {
      * @param string $password
      * @param string $name
      * @param string $surname
-     * @return
+     *
+     * @throws SqlException
      */
     public function registerUser(string $username, string $email, string $password, string $name, string $surname);
+
+    /**
+     * @param string $verificationCode
+     */
+    public function verifyUser(string $verificationCode);
 
 }

@@ -6,6 +6,7 @@ use App\Exceptions\SqlException;
 use App\Http\Controllers\Controller;
 use App\Models\Account\User;
 use App\Services\Interfaces\IAccountService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -39,34 +40,66 @@ class RegisterController extends Controller {
      */
     public function register(Request $request){
 
-        $credentials = $request->only('email', 'password', 'password_confirmation', 'name', 'surname');
+        $credentials = $request->only('username', 'email', 'password', 'password_confirmation', 'name', 'surname');
 
         $validator = $this->validator($credentials);
+
         if($validator->fails()){
-            return $this->createJsonResponse([
-                'success' => false,
-                'message' => $validator->errors()
-            ]);
+
+            if($request->ajax() || $request->wantsJson()){
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()
+                ], 400);
+            } else {
+                return redirect('registerForm')
+                    ->withErrors($validator);
+            }
         }
 
         try {
-            $this->accountService->registerUser('', '', '', '', '');
+
+            $this->accountService->registerUser($credentials['username'], $credentials['email'],
+                $credentials['password'], $credentials['name'], $credentials['surname']);
         } catch (SqlException $e) {
-            return response()->json([]);
+
+            if($request->ajax() || $request->wantsJson()){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Fatal error'
+                ], 500);
+            } else {
+                return redirect('registerForm')
+                    ->withErrors([
+                        'message' => 'Fatal error'
+                    ]);
+            }
         }
 
-        return $this->createJsonResponse([
-            'success' => true,
-            'message' => __('registration.success')
-        ]);
+        if($request->ajax() || $request->wantsJson()){
+            return response()->json([
+                'success' => true,
+                'message' => 'User registered'
+            ]);
+        } else {
+            return redirect('registerForm');
+        }
     }
 
     /**
      * @param Request $request
      * @param $code
+     * @return \Illuminate\Http\JsonResponse
      */
     public function verify(Request $request, $code){
-        // TODO verify the user
+
+        try {
+            $this->accountService->verifyUser($code);
+        } catch (Exception $e){
+            return response()->json([]);
+        }
+
+        return response()->json([]);
     }
 
     /*
@@ -94,10 +127,6 @@ class RegisterController extends Controller {
         ]);
 
         return $verificationCode;
-    }
-
-    private function createJsonResponse(array $data){
-        return response()->json($data);
     }
 
 }
