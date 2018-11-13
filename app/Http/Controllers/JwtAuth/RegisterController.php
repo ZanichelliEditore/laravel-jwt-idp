@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\JwtAuth;
 
+use App\Events\RegistrationEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,7 +40,9 @@ class RegisterController extends Controller {
         }
 
         $user = $this->createUser($credentials);
-        $this->createVerificationCode($user);
+        $verificationCode = $this->createVerificationCode($user);
+
+        event(new RegistrationEvent($user, $verificationCode));
 
         return $this->createJsonResponse([
             'success' => true,
@@ -64,10 +67,14 @@ class RegisterController extends Controller {
      * @param User $user
      */
     private function createVerificationCode(User $user){
+
         $verificationCode = str_random(30);
         DB::table('user_verifications')->insert([
             'user_id' => $user->id,
-            'verification_code' => $verificationCode]);
+            'verification_code' => $verificationCode
+        ]);
+
+        return $verificationCode;
     }
 
     /**
