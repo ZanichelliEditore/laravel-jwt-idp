@@ -17,20 +17,15 @@ class DatabaseSeeder extends Seeder {
             'email' => 'mario.rossi@example.com',
             'is_verified' => true,
             'name' => 'Mario',
-            'surname' => 'Rossi',
-            'is_employee' => true
+            'surname' => 'Rossi'
         ]);
 
         DB::table('roles')->insert([
-            'name' => 'FUNZIONARIO'
+            'name' => 'DIPENDENTE'
         ]);
 
         DB::table('roles')->insert([
-            'name' => 'DIRETTORE'
-        ]);
-
-        DB::table('departments')->insert([
-            'name' => 'COMMERCIALE'
+            'name' => 'AMMINISTRATORE'
         ]);
 
         DB::table('user_roles')->insert([

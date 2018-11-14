@@ -140,7 +140,7 @@ class LoginController extends Controller {
      * @OA\Get(
      *     path="/v1/loginWithToken",
      *     summary="retrieve user info in json format", 
-     *     description="Use to retrieve user info with roles and departments",
+     *     description="Use to retrieve user info with roles",
      *     operationId="loginWithToken",
      *     tags={"JWT Auth"},
      *     @OA\Parameter(

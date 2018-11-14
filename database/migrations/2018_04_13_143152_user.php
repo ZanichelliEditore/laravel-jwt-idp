@@ -25,7 +25,6 @@ class User extends Migration {
             $table->boolean('is_verified')->default(false);
             $table->string('name', 50);
             $table->string('surname', 50);
-            $table->boolean('is_employee')->default(false);
             $table->rememberToken();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
