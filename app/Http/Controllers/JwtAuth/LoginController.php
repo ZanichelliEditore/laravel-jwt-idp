@@ -30,7 +30,7 @@ class LoginController extends Controller {
     public function showLoginForm(Request $request){
         $userSession = $this->getUserSession($request);
         if($userSession != null){
-            $url = $request->get('redirect') . '?token=' . $userSession['token'];
+            $url = $request->input('redirect') . '?token=' . $userSession['token'];
             return redirect()->away($url);
         }
         return view('auth.login');
