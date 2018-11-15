@@ -131,7 +131,7 @@ class LoginController extends Controller {
         if($request->wantsJson()){
             return $this->createResponse(true, $response, true);
         } else {
-            $url = $request->get('redirect') . '?token=' . $token;
+            $url = $request->input('redirect') . '?token=' . $token;
             return redirect()->away($url);
         }
     }
