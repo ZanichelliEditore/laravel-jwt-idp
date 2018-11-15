@@ -14,6 +14,7 @@ namespace App\Listeners;
 use App\Events\RegistrationEvent;
 use App\Mail\UserRegistered;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -27,6 +28,8 @@ class RegistrationListener implements ShouldQueue {
     }
 
     public function handle(RegistrationEvent $event){
+
+        Log::info("Invio evento");
 
         $user = $event->getUser();
         $verificationCode = $event->getVerificationCode();

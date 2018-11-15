@@ -82,7 +82,9 @@ class RegisterController extends Controller {
                 'message' => 'User registered'
             ]);
         } else {
-            return redirect('registerForm');
+            return redirect('loginForm')->with([
+                'success' => __('auth.label-registration-success')
+            ]);
         }
     }
 

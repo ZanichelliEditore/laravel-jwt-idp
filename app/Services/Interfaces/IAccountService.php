@@ -25,6 +25,7 @@ interface IAccountService {
 
     /**
      * @param string $verificationCode
+     * @throws SqlException
      */
     public function verifyUser(string $verificationCode);
 

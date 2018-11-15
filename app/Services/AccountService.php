@@ -62,14 +62,38 @@ class AccountService implements IAccountService {
 
         DB::commit();
 
-        event(new RegistrationEvent($user, $verificationCode));
+        event(new RegistrationEvent($user, $verificationCode->verification_code));
     }
 
     /**
      * @param string $verificationCode
+     * @throws SqlException
      */
     public function verifyUser(string $verificationCode){
-        // TODO: Implement verifyUser() method.
+        // TODO ci può accedere solo se guest
+
+        try {
+
+            $verificationCode = VerificationCode::where('verification_code', $verificationCode)->get();
+
+            if(empty($verificationCode)){
+                // TODO exception
+                throw new Exception();
+            }
+
+            $user = User::where('id', $verificationCode->user_id)->get();
+            $user->is_verified = 1;
+
+            if(!$user->save()){
+                throw new Exception();
+            }
+
+        } catch (Exception $e){
+            Log::error($e->getMessage());
+            // TODO exception
+            throw new SqlException($e->getMessage());
+        }
+
     }
 
 }

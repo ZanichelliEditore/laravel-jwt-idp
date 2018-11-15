@@ -16,7 +16,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\LoginEvent' => [
             'App\Listeners\LogLoginListener'
         ],
-        'App\Event\RegistrationEvent' => [
+        'App\Events\RegistrationEvent' => [
             'App\Listeners\RegistrationListener'
         ]
     ];

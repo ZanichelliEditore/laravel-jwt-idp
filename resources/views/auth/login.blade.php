@@ -2,7 +2,15 @@
 
 @section('content')
 
-    <div id="login-form-panel2" class="col-10 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto border px-3 py-4 mt-5">
+    @if (session('success'))
+        <div id="panel-errors-login" class="alert alert-success col-10 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto px-3 mt-3">
+            <ul class="mb-0">
+                <li>{{ session('success') }}</li>
+            </ul>
+        </div>
+    @endif
+
+    <div id="login-form-panel2" class="col-10 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto border px-3 py-4 mt-4">
         <form method="post" action="{{ route('login') }}">
             <input type="hidden" name="redirect" value="{{app('request')->input('redirect')}}">
             <div class="form-group">

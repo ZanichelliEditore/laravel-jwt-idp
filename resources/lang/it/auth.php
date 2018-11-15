@@ -20,5 +20,6 @@ return [
     'label-enter-name' => 'Inserisci il nome',
     'label-enter-surname' => 'Inserisci il cognome',
     'label-sign-up' => 'Registrati',
-    'label-login' => 'Accedi'
+    'label-login' => 'Accedi',
+    'label-registration-success' => 'Registrazione avvenuta con successo! Accedi alla tua casella di posta per verificare la tua e-mail'
 ];
