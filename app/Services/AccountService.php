@@ -74,23 +74,25 @@ class AccountService implements IAccountService {
 
         try {
 
-            $verificationCode = VerificationCode::where('verification_code', $verificationCode)->get();
+            $userVerification = VerificationCode::where('verification_code', $verificationCode)->first();
 
-            if(empty($verificationCode)){
-                // TODO exception
-                throw new Exception();
+            if(empty($userVerification)){
+                throw new Exception('Non trovato il codice');
             }
 
-            $user = User::where('id', $verificationCode->user_id)->get();
+            $user = User::where('id', $userVerification->user_id)->first();
             $user->is_verified = 1;
 
             if(!$user->save()){
-                throw new Exception();
+                throw new Exception('Non è salvato');
+            }
+
+            if(!$userVerification->delete()){
+                throw new Exception('Non è cancellato');
             }
 
         } catch (Exception $e){
             Log::error($e->getMessage());
-            // TODO exception
             throw new SqlException($e->getMessage());
         }
 

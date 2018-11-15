@@ -98,10 +98,16 @@ class RegisterController extends Controller {
         try {
             $this->accountService->verifyUser($code);
         } catch (Exception $e){
-            return response()->json([]);
+            return redirect('loginForm')->withErrors([
+                'message' => [
+                    __('auth.err-verification-code')
+                ]
+            ]);
         }
 
-        return response()->json([]);
+        return redirect('loginForm')->with([
+            'success' => __('auth.label-account-actived')
+        ]);
     }
 
     /*
