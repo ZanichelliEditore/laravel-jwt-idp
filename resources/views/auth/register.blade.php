@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="register-form-panel">
+    <div class="col-10 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto border px-3 py-4 mt-3 mb-5">
         <form method="post" action="{{ route('register') }}">
             {{ csrf_field() }}
             <div class="form-group">
@@ -30,7 +30,9 @@
                 <input id="inputSurname" type="text" class="form-control" name="surname"
                        placeholder="@lang('auth.label-enter-surname')" required="required">
             </div>
-            <button type="submit" class="btn btn-primary">@lang('auth.label-sign-up')</button>
+            <button type="submit" class="d-block col-4 btn btn-primary ml-auto mr-auto">
+                @lang('auth.label-sign-up')
+            </button>
         </form>
     </div>
 

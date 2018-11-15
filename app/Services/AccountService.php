@@ -30,7 +30,6 @@ class AccountService implements IAccountService {
      * Registers new user into the idp. After registration the user will be
      * notified by e-mail.
      *
-     * @param string $username
      * @param string $email
      * @param string $password
      * @param string $name
@@ -38,7 +37,7 @@ class AccountService implements IAccountService {
      *
      * @throws SqlException
      */
-    public function registerUser(string $username, string $email, string $password, string $name, string $surname){
+    public function registerUser(string $email, string $password, string $name, string $surname){
 
         DB::beginTransaction();
 
