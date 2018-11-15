@@ -9,7 +9,7 @@ class UserRole extends Model {
     protected $table = 'user_roles';
 
     protected $hidden = [
-        'id', 'department_id', 'role_id', 'user_id'
+        'id', 'role_id', 'user_id'
     ];
 
     /**

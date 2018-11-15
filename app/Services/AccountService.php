@@ -30,7 +30,6 @@ class AccountService implements IAccountService {
      * Registers new user into the idp. After registration the user will be
      * notified by e-mail.
      *
-     * @param string $username
      * @param string $email
      * @param string $password
      * @param string $name
@@ -38,13 +37,12 @@ class AccountService implements IAccountService {
      *
      * @throws SqlException
      */
-    public function registerUser(string $username, string $email, string $password, string $name, string $surname){
+    public function registerUser(string $email, string $password, string $name, string $surname){
 
         DB::beginTransaction();
 
         try {
             $user = User::create([
-                'username' => $email,
                 'email' => $email,
                 'password' => Hash::make($password),
                 'name' => $name,
@@ -64,14 +62,40 @@ class AccountService implements IAccountService {
 
         DB::commit();
 
-        event(new RegistrationEvent($user, $verificationCode));
+        event(new RegistrationEvent($user, $verificationCode->verification_code));
     }
 
     /**
      * @param string $verificationCode
+     * @throws SqlException
      */
     public function verifyUser(string $verificationCode){
-        // TODO: Implement verifyUser() method.
+        // TODO decidere i messaggi degli errori
+
+        try {
+
+            $userVerification = VerificationCode::where('verification_code', $verificationCode)->first();
+
+            if(empty($userVerification)){
+                throw new Exception('Non trovato il codice');
+            }
+
+            $user = User::where('id', $userVerification->user_id)->first();
+            $user->is_verified = 1;
+
+            if(!$user->save()){
+                throw new Exception('Non è salvato');
+            }
+
+            if(!$userVerification->delete()){
+                throw new Exception('Non è cancellato');
+            }
+
+        } catch (Exception $e){
+            Log::error($e->getMessage());
+            throw new SqlException($e->getMessage());
+        }
+
     }
 
 }

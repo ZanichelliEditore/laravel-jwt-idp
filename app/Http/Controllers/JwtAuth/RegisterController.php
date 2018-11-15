@@ -40,7 +40,7 @@ class RegisterController extends Controller {
      */
     public function register(Request $request){
 
-        $credentials = $request->only('username', 'email', 'password', 'password_confirmation', 'name', 'surname');
+        $credentials = $request->only('email', 'password', 'password_confirmation', 'name', 'surname');
 
         $validator = $this->validator($credentials);
 
@@ -59,7 +59,7 @@ class RegisterController extends Controller {
 
         try {
 
-            $this->accountService->registerUser($credentials['username'], $credentials['email'],
+            $this->accountService->registerUser($credentials['email'],
                 $credentials['password'], $credentials['name'], $credentials['surname']);
         } catch (SqlException $e) {
 
@@ -82,7 +82,9 @@ class RegisterController extends Controller {
                 'message' => 'User registered'
             ]);
         } else {
-            return redirect('registerForm');
+            return redirect('loginForm')->with([
+                'success' => __('auth.label-registration-success')
+            ]);
         }
     }
 
@@ -92,14 +94,22 @@ class RegisterController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function verify(Request $request, $code){
-
+        // TODO ci può accedere solo se guest
         try {
             $this->accountService->verifyUser($code);
         } catch (Exception $e){
-            return response()->json([]);
+            // TODO controllare se è ajax oppure non ajax
+            return redirect('loginForm')->withErrors([
+                'message' => [
+                    __('auth.err-verification-code')
+                ]
+            ]);
         }
 
-        return response()->json([]);
+        // TODO controllare se è ajax oppure non ajax
+        return redirect('loginForm')->with([
+            'success' => __('auth.label-account-actived')
+        ]);
     }
 
     /*
@@ -112,21 +122,6 @@ class RegisterController extends Controller {
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
-    }
-
-    /**
-     * Creates a validation code to send to user
-     * @param User $user
-     */
-    private function createVerificationCode(User $user){
-
-        $verificationCode = str_random(30);
-        DB::table('user_verifications')->insert([
-            'user_id' => $user->id,
-            'verification_code' => $verificationCode
-        ]);
-
-        return $verificationCode;
     }
 
 }

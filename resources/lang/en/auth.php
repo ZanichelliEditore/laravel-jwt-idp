@@ -21,6 +21,7 @@ return [
     'err-login' => 'Wrong e-mail or password.',
     'err-jwt' => 'Error during login. Try later.',
     'err-fields' => 'Fill correctly all required fields',
+    'err-verification-code' => 'Error during account verification',
 
     'label-email' => 'E-mail address',
     'label-enter-email' => 'Enter e-mail',
@@ -34,6 +35,8 @@ return [
     'label-enter-name' => 'Enter name',
     'label-enter-surname' => 'Enter surname',
     'label-sign-up' => 'Sign up',
-    'label-login' => 'Login'
+    'label-login' => 'Login',
+    'label-registration-success' => 'Successful registration! Check your mail box to verify your e-mail address',
+    'label-account-actived' => 'Account successfully activated'
 
 ];
