@@ -29,8 +29,6 @@ class RegistrationListener implements ShouldQueue {
 
     public function handle(RegistrationEvent $event){
 
-        Log::info("Invio evento");
-
         $user = $event->getUser();
         $verificationCode = $event->getVerificationCode();
 
