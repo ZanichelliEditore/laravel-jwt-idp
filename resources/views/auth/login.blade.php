@@ -6,12 +6,14 @@
         <form method="post" action="{{ route('login') }}">
             <input type="hidden" name="redirect" value="{{app('request')->input('redirect')}}">
             <div class="form-group">
-                <label for="inputUsername">@lang('auth.label-username')</label>
-                <input id="inputUsername" type="text" class="form-control"  name="username" placeholder="@lang('auth.label-enter-username')">
+                <label for="inputUsername">@lang('auth.label-email')</label>
+                <input id="inputUsername" type="text" class="form-control"  name="email"
+                       placeholder="@lang('auth.label-enter-email')" required="required">
             </div>
             <div class="form-group">
                 <label for="inputPassword">Password</label>
-                <input id="inputPassword" type="password" class="form-control" name="password" placeholder="Password">
+                <input id="inputPassword" type="password" class="form-control" name="password"
+                       placeholder="Password" required="required">
             </div>
             <button id="button-submit-login" type="submit" class="btn btn-primary">@lang('auth.label-login')</button>
         </form>

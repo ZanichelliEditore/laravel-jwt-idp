@@ -40,7 +40,7 @@ class RegisterController extends Controller {
      */
     public function register(Request $request){
 
-        $credentials = $request->only('email', 'email', 'password', 'password_confirmation', 'name', 'surname');
+        $credentials = $request->only('email', 'password', 'password_confirmation', 'name', 'surname');
 
         $validator = $this->validator($credentials);
 
@@ -59,7 +59,7 @@ class RegisterController extends Controller {
 
         try {
 
-            $this->accountService->registerUser($credentials['email'], $credentials['email'],
+            $this->accountService->registerUser($credentials['email'],
                 $credentials['password'], $credentials['name'], $credentials['surname']);
         } catch (SqlException $e) {
 

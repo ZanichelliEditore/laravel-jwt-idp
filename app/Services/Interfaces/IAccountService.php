@@ -14,7 +14,6 @@ use App\Exceptions\SqlException;
 interface IAccountService {
 
     /**
-     * @param string $username
      * @param string $email
      * @param string $password
      * @param string $name
@@ -22,7 +21,7 @@ interface IAccountService {
      *
      * @throws SqlException
      */
-    public function registerUser(string $username, string $email, string $password, string $name, string $surname);
+    public function registerUser(string $email, string $password, string $name, string $surname);
 
     /**
      * @param string $verificationCode

@@ -44,7 +44,6 @@ class AccountService implements IAccountService {
 
         try {
             $user = User::create([
-                'username' => $email,
                 'email' => $email,
                 'password' => Hash::make($password),
                 'name' => $name,

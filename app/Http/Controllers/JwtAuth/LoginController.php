@@ -49,16 +49,16 @@ class LoginController extends Controller {
      *             @OA\Schema(
      *                 type="object",
      *                 @OA\Property(
-     *                     property="username",
-     *                     description="User name",
+     *                     property="email",
+     *                     description="User e-mail",
      *                     type="string",
-     *                     example="demouser" 
+     *                     example="mario.rossi@example.com"
      *                 ),
      *                 @OA\Property(
      *                     property="password",
      *                     description="User password",
      *                     type="string",
-     *                     example="demopwd" 
+     *                     example="secret"
      *                 )
      *             )
      *          )
@@ -78,11 +78,11 @@ class LoginController extends Controller {
          * Redirect if request haven't username or password and the request
          * haven't "Accept application/json" header.
          */
-        if(!$request->has(['username', 'password']) && !$request->wantsJson()){
+        if(!$request->has(['email', 'password']) && !$request->wantsJson()){
             redirect()->route('loginForm');
         }
 
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('email', 'password');
 
         $validator = $this->validator($credentials);
         if($validator->fails()){
@@ -286,8 +286,8 @@ class LoginController extends Controller {
      */
     private function validator(array $data){
         return Validator::make($data, [
-            'username' => 'required|string|max:255',
-            'password' => 'required|string|min:3',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
         ]);
     }
 

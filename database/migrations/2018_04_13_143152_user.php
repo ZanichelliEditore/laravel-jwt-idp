@@ -19,9 +19,8 @@ class User extends Migration {
             $table->collation = 'utf8_unicode_ci';
 
             $table->increments('id');
-            $table->string('username', 60)->unique();
-            $table->string('email', 60)->nullable();
-            $table->string('password')->nullable();
+            $table->string('email')->unique();
+            $table->string('password');
             $table->boolean('is_verified')->default(false);
             $table->string('name', 50);
             $table->string('surname', 50);
