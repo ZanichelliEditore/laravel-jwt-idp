@@ -124,19 +124,4 @@ class RegisterController extends Controller {
         ]);
     }
 
-    /**
-     * Creates a validation code to send to user
-     * @param User $user
-     */
-    private function createVerificationCode(User $user){
-
-        $verificationCode = str_random(30);
-        DB::table('user_verifications')->insert([
-            'user_id' => $user->id,
-            'verification_code' => $verificationCode
-        ]);
-
-        return $verificationCode;
-    }
-
 }
