@@ -94,10 +94,11 @@ class RegisterController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function verify(Request $request, $code){
-
+        // TODO ci può accedere solo se guest
         try {
             $this->accountService->verifyUser($code);
         } catch (Exception $e){
+            // TODO controllare se è ajax oppure non ajax
             return redirect('loginForm')->withErrors([
                 'message' => [
                     __('auth.err-verification-code')
@@ -105,6 +106,7 @@ class RegisterController extends Controller {
             ]);
         }
 
+        // TODO controllare se è ajax oppure non ajax
         return redirect('loginForm')->with([
             'success' => __('auth.label-account-actived')
         ]);

@@ -70,7 +70,7 @@ class AccountService implements IAccountService {
      * @throws SqlException
      */
     public function verifyUser(string $verificationCode){
-        // TODO ci può accedere solo se guest
+        // TODO decidere i messaggi degli errori
 
         try {
 
