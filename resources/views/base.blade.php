@@ -18,15 +18,22 @@
 
     <div id="zanichelli-nav">
         <ul class="nav justify-content-end">
-            @if(Route::is('loginForm'))
+            @if(session('user'))
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('registerForm') }}">@lang('auth.label-sign-up')</a>
+                    <a class="nav-link active" href="{{ route('logout', ['token' => session()->get('token')]) }}">@lang('auth.label-logout')</a>
                 </li>
             @else
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('loginForm') }}">@lang('auth.label-login')</a>
-                </li>
+                @if(Route::is('loginForm'))
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('registerForm') }}">@lang('auth.label-sign-up')</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('loginForm') }}">@lang('auth.label-login')</a>
+                    </li>
+                @endif
             @endif
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ strtoupper(App::getLocale('locale')) }}</a>
                 <div class="dropdown-menu dropdown-menu-right">

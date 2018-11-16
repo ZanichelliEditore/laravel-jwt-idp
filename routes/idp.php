@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group( function() {
 
     Route::middleware('api')->get('/loginWithToken', 'JwtAuth\LoginController@loginWithToken');
-    Route::middleware('api')->get('/logout', 'JwtAuth\LoginController@logout');
+    Route::middleware('web')->get('/logout', 'JwtAuth\LoginController@logout')->name('logout');
 
     Route::middleware('web')->post('/login', 'JwtAuth\LoginController@login')->name('login');
     Route::middleware('web')->post('/register', 'JwtAuth\RegisterController@register')->name('register');

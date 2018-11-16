@@ -37,6 +37,7 @@ return [
     'label-sign-up' => 'Sign up',
     'label-login' => 'Login',
     'label-registration-success' => 'Successful registration! Check your mail box to verify your e-mail address',
-    'label-account-actived' => 'Account successfully activated'
+    'label-account-actived' => 'Account successfully activated',
+    'label-logout' => 'Logout'
 
 ];

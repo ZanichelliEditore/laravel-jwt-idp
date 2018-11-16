@@ -12,6 +12,7 @@ use App\Events\LoginEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\Notification\Publisher;
+use function GuzzleHttp\Psr7\build_query;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -28,15 +29,23 @@ class LoginController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function showLoginForm(Request $request){
+
         $userSession = $this->getUserSession($request);
 
-        // TODO controllare se ha il parametro redirect e decidere un comportamento
+        if(empty($userSession)){
+            return view('auth.login');
+        }
+
+        $redirectUrl = $request->input('redirect');
+
+        if(empty($redirectUrl)){
+            return view('auth.logged');
+        }
 
         if($userSession != null){
-            $url = $request->input('redirect') . '?token=' . $userSession['token'];
+            $url = $redirectUrl . '?' . build_query(['token' => $userSession['token']]);
             return redirect()->away($url);
         }
-        return view('auth.login');
     }
 
     /**
@@ -250,23 +259,29 @@ class LoginController extends Controller {
 //            'user_id' => $user->id
 //        ]);
 
-        JWTAuth::parseToken()->refresh();
-        auth()->logout();
+        $request->session()->flush();
 
         SessionManager::flushByUserId($user->id);
+
+        //session()->regenerate(true);
+
+        auth()->logout(true, true);
 
         return response([], 200);
     }
 
     private function getUserSession(Request $request){
         $token = $request->session()->get('token');
+
         if(!$token){
             return null;
         }
+
         JWTAuth::setToken($token);
         if(!JWTAuth::check()){
             return null;
         }
+
         $user = $request->session()->get('user');
         $userSession = array(
             'user' => $user,
