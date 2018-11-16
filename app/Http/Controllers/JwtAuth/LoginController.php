@@ -263,8 +263,6 @@ class LoginController extends Controller {
 
         SessionManager::flushByUserId($user->id);
 
-        //session()->regenerate(true);
-
         auth()->logout(true, true);
 
         return response([], 200);

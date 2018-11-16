@@ -2,6 +2,16 @@
 
 @section('content')
 
+    @if ($errors->any())
+        <div id="panel-errors-login" class="alert alert-danger col-10 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto px-3 mt-3">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="col-10 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto border px-3 py-4 mt-3 mb-5">
         <form method="post" action="{{ route('register') }}">
             {{ csrf_field() }}
