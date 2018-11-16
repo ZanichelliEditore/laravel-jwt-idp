@@ -17,6 +17,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // TODO Controllare l'utente in sessione
         if (Auth::guard($guard)->check()) {
             return redirect('loginForm');
         }

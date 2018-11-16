@@ -29,6 +29,9 @@ class LoginController extends Controller {
      */
     public function showLoginForm(Request $request){
         $userSession = $this->getUserSession($request);
+
+        // TODO controllare se ha il parametro redirect e decidere un comportamento
+
         if($userSession != null){
             $url = $request->input('redirect') . '?token=' . $userSession['token'];
             return redirect()->away($url);
