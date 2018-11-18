@@ -33,6 +33,57 @@ class RegisterController extends Controller {
     }
 
     /**
+     * @OA\Post(
+     *     path="/v1/register",
+     *     summary="register new user", 
+     *     description="Use to create new user",
+     *     operationId="register",
+     *     tags={"JWT Auth"},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"email", "password", "password_confirmation", "name", "surname"},
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="User e-mail",
+     *                     type="string" 
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     description="User password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password_confirmation",
+     *                     description="Confirm password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     description="User name",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="surname",
+     *                     description="User surname",
+     *                     type="string"
+     *                 )
+     *             )
+     *          )
+     *     ),     
+     *     @OA\Response(
+     *         response=200,
+     *         description="Operation successful",
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *     )
+     * )
+     */
+
+    /**
      * Registers a new user after validate data.
      *
      * @param Request $request
