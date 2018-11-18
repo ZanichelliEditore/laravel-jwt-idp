@@ -15,6 +15,7 @@ application passing a token. The application must use that token to retrieve the
 - Duplicate the file .env.example and change the name in .env
 - In the root the project execute ``composer install``
 - In the project root execute the command ``php artisan key:generate``
+- Set a secret key (for jwt authentication) executing from command line ``php artisan jwt:secret``
 
 ### Routes
 GET Requests
