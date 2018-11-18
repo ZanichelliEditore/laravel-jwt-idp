@@ -59,6 +59,7 @@ class LoginController extends Controller {
      *         @OA\MediaType(
      *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
+     *                 required={"email", "password"},
      *                 type="object",
      *                 @OA\Property(
      *                     property="email",
@@ -79,7 +80,7 @@ class LoginController extends Controller {
      *         response=200,
      *         description="Operation successful",
      *         @OA\MediaType(
-     *             mediaType="application/json",
+     *             mediaType="application/json"
      *         )
      *     )
      * )
