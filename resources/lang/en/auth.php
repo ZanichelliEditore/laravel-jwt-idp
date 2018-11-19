@@ -38,6 +38,7 @@ return [
     'label-login' => 'Login',
     'label-registration-success' => 'Successful registration! Check your mail box to verify your e-mail address',
     'label-account-actived' => 'Account successfully activated',
-    'label-logout' => 'Logout'
+    'label-logout' => 'Logout',
+    'label-logged' => 'is logged'
 
 ];

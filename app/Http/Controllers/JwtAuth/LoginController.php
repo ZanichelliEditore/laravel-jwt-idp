@@ -274,7 +274,11 @@ class LoginController extends Controller {
 
         auth()->logout(true, true);
 
-        return response([], 200);
+        if($request->ajax() || $request->wantsJson()){
+            response([], 200);
+        } else {
+            return redirect('loginForm');
+        }
     }
 
     private function getUserSession(Request $request){

@@ -24,5 +24,6 @@ return [
     'label-login' => 'Accedi',
     'label-registration-success' => 'Registrazione avvenuta con successo! Accedi alla tua casella di posta per verificare la tua e-mail',
     'label-account-actived' => 'Account attivato correttamente',
-    'label-logout' => 'Esci'
+    'label-logout' => 'Esci',
+    'label-logged' => 'sei autenticato'
 ];
