@@ -140,10 +140,18 @@ class LoginController extends Controller {
 
         event(new LoginEvent($user, $request->ip()));
 
-        if($request->wantsJson()){
+        if($request->ajax() || $request->wantsJson()){
             return $this->createResponse(true, $response, true);
         } else {
-            $url = $request->input('redirect') . '?token=' . $token;
+
+            $redirect = $request->input('redirect');
+
+            if(empty($redirect)){
+                return view('auth.logged');
+            }
+
+            $url = $redirect . '?token=' . $token;
+
             return redirect()->away($url);
         }
     }

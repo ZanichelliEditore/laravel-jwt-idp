@@ -7,10 +7,10 @@
 
     <title>Laravel JWT IDP</title>
 
-    <link rel="stylesheet" href="css/app.css">
-    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="/css/app.css">
+    <script src="/js/app.js"></script>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
