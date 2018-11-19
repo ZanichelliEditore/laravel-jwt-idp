@@ -1,11 +1,10 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Zanichelli API IdentityProvider",
+        "title": "Laravel IdentityProvider",
         "description": "REST APIs to use SSO (single-sign-on) for applications ",
         "contact": {
-            "name": "Zanichelli DEV team",
-            "email": "gsiciliano@zanichelli.it"
+            "name": "Zanichelli DEV team"
         },
         "version": "1.0.0"
     },
@@ -28,6 +27,10 @@
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
                                 "properties": {
                                     "email": {
                                         "description": "User e-mail",
@@ -112,25 +115,61 @@
                     }
                 }
             }
-        }
-    },
-    "components": {
-        "securitySchemes": {
-            "passport": {
-                "type": "oauth2",
-                "in": "header",
-                "flows": {
-                    "clientCredentials": {
-                        "tokenUrl": "http://laravel-idp.local/oauth/token",
-                        "scopes": {
-                            "manage-user": "User management"
+        },
+        "/v1/register": {
+            "post": {
+                "tags": [
+                    "JWT Auth"
+                ],
+                "summary": "register new user",
+                "description": "Use to create new user",
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "name",
+                                    "surname"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "User e-mail",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Confirm password",
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "description": "User name",
+                                        "type": "string"
+                                    },
+                                    "surname": {
+                                        "description": "User surname",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
                 },
-                "scheme": [
-                    "http",
-                    "https"
-                ]
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
             }
         }
     },
