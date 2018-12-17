@@ -252,11 +252,11 @@ class LoginController extends Controller {
         } catch (TokenInvalidException $e) {
             return response()->json([
                 'message' => 'Invalid token'
-            ], 403);
+            ], 400);
         } catch (JWTException $e) {
             return response()->json([
                 'message' => 'Token absent'
-            ], 403);
+            ], 400);
         }
 
         // Decomment to send a message to queues with rabbitmq
