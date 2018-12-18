@@ -66,6 +66,7 @@ it can be usefull in a context with RBAC (Role-based access control).
 ```
 
 ### Example Middleware in Laravel
+Following code is a basic implementation of a middleware that checks if the user is in the session. It can be implemented in different ways, for example using guards and the Authenticable user of Laravel. If you don't know what guards is read https://laravel.com/docs/5.7/authentication
 ```php
 class IdpMiddleware {
 
