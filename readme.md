@@ -64,3 +64,39 @@ it can be usefull in a context with RBAC (Role-based access control).
     }
 }
 ```
+
+### Example Middleware in Laravel
+```php
+class IdpMiddleware {
+
+    public function handle(Request $request, Closure $next){
+
+        // Check if the request has the token field
+        if($request->input('token')){
+            $token = $request->input('token');
+
+            $client = new Client();
+
+            try {
+                $response = $client->get('http://example.idp.com/v1/loginWithToken?token=' . $token);
+            } catch (\Exception $e){
+                Log::error($e->getMessage());
+                return redirect('http://example.idp.com/loginForm' . '?redirect=' . $request->url());
+            }
+
+            if($response->getStatusCode() == 200){
+
+                $userJson = \GuzzleHttp\json_decode($response->getBody());
+                
+                $request->session()->put('user', $userJson);
+            }
+        }
+
+        // Check if the user is logged in
+        if(!$request->session()->has('user')){
+            return redirect('http://example.idp.com/loginForm' . '?redirect=' . $request->url());
+        }
+
+        return $next($request);
+    }
+```
