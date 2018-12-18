@@ -66,7 +66,7 @@ it can be usefull in a context with RBAC (Role-based access control).
 ```
 
 ### Example Middleware in Laravel
-The following code is a basic implementation of a middleware that checks if the user is in the session. It can be implemented in different ways, for example using guards and the Authenticable user of Laravel. If you don't know what guards is, read https://laravel.com/docs/5.7/authentication
+The following code is a basic implementation of a middleware that checks if the user is in the session. It can be implemented in different ways, for example using guards and the Authenticable user of Laravel. If you don't know what guards is, read https://laravel.com/docs/5.7/authentication. This implementation uses GuzzleHttp library for http requests.
 ```php
 class IdpMiddleware {
 
@@ -79,9 +79,11 @@ class IdpMiddleware {
             $client = new Client();
 
             try {
+                // Retrieves the user information by token
                 $response = $client->get('http://example.idp.com/v1/loginWithToken?token=' . $token);
             } catch (\Exception $e){
                 Log::error($e->getMessage());
+                // Redirect to login form
                 return redirect('http://example.idp.com/loginForm' . '?redirect=' . $request->url());
             }
 
@@ -95,6 +97,7 @@ class IdpMiddleware {
 
         // Check if the user is logged in
         if(!$request->session()->has('user')){
+            // Redirect to login form
             return redirect('http://example.idp.com/loginForm' . '?redirect=' . $request->url());
         }
 
