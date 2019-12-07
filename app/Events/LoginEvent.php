@@ -8,7 +8,7 @@
 
 namespace App\Events;
 
-use App\Models\Account\User;
+use App\Models\User;
 use Illuminate\Queue\SerializesModels;
 
 /**
