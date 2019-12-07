@@ -4,48 +4,42 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Laravel JWT IDP</title>
+    <title>Zanichelli</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
 
     <link rel="stylesheet" href="/css/app.css">
-    <script src="/js/app.js"></script>
-
     <link rel="stylesheet" href="/css/style.css">
+
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+            integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous">
+    </script>
 
 </head>
 <body>
-<div id="content">
-
-    <div id="zanichelli-nav">
-        <ul class="nav justify-content-end">
-            @if(session('user'))
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('logout', ['token' => session()->get('token')]) }}">@lang('auth.label-logout')</a>
-                </li>
-            @else
-                @if(Route::is('loginForm'))
+    <div id="app">
+        <div id="zanichelli-nav">
+            <ul class="nav justify-content-end">
+                @auth
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('registerForm') }}">@lang('auth.label-sign-up')</a>
+                        <a class="nav-link active" href="{{ route('logout') }}">@lang('auth.label-logout')</a>
                     </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('loginForm') }}">@lang('auth.label-login')</a>
-                    </li>
-                @endif
-            @endif
+                @elseauth
+                    @if(Route::is('loginForm'))
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('loginForm') }}">@lang('auth.label-login')</a>
+                        </li>
+                    @endif
+                @endauth
+            </ul>
+        </div>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ strtoupper(App::getLocale('locale')) }}</a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="locale/it">IT</a>
-                    <a class="dropdown-item" href="locale/en">EN</a>
-                </div>
-            </li>
-        </ul>
+        @yield('content')
     </div>
-
-    @yield('content')
-
-</div>
+    
+    <script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>
