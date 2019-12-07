@@ -11,17 +11,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Cookie;
-use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Cookie as FacadeCookie;
 
 class LoginController extends Controller
 {
-    protected $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
 
     /**
      * Shows the login form or redirect the user to the application if he is authenticated.

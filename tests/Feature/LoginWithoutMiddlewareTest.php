@@ -26,7 +26,7 @@ class LoginWithoutMiddlewareTest extends TestCase
             'is_verified' => true
         ]);
 
-        $loginController = new LoginController($mock);
+        $loginController = new LoginController();
 
         $request = new LoginRequest([], [], [], [], [], ['REMOTE_ADDR' => '127.0.0.1']);
 
@@ -50,7 +50,7 @@ class LoginWithoutMiddlewareTest extends TestCase
             'is_verified' => false
         ]);
 
-        $loginController = new LoginController($mock);
+        $loginController = new LoginController();
 
         $request = new LoginRequest([], [], [], [], [], ['REMOTE_ADDR' => '127.0.0.1']);
 
