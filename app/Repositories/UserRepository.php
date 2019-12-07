@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,10 +17,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::create([
             'username' => $data['username'],
-            'email' => isset($data['email'])? $data['email'] : null,
+            'email' => isset($data['email']) ? $data['email'] : null,
             'name' => $data['name'],
             'surname' => $data['surname'],
-            'password' => isset($data['password'])? bcrypt($data['password']) : null,
+            'password' => isset($data['password']) ? bcrypt($data['password']) : null,
             'is_verified' => isset($data['employee']) && $data['employee'],
         ]);
     }
@@ -47,9 +48,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             return User::paginate(10);
         }
 
-        return User::where('username', 'like', '%'. $query . '%')
-                    ->orWhere('email', 'like', '%' . $query . '%')
-                    ->paginate(10);
+        return User::where('username', 'like', '%' . $query . '%')
+            ->orWhere('email', 'like', '%' . $query . '%')
+            ->paginate(10);
     }
 
     /**
@@ -64,17 +65,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::where('id', $id)->update($data);
     }
 
-    // /**
-    //  * Finds employee by username.
-    //  *
-    //  * @param string $username
-    //  * @return User | null
-    //  */
-    // public function findEmployeeByUsername(string $username)
-    // {
-    //     return User::where('username', $username)->where('is_employee', true)->first();
-    // }
-
     /**
      * Returns true if username is available, otherwise false.
      *
@@ -85,14 +75,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::where('username', $username)->doesntExist();
     }
-
-    // /**
-    //  * Returns the list of employees.
-    //  *
-    //  * @return array
-    //  */
-    // public function getAllEmployees()
-    // {
-    //     return User::where('is_employee', true)->get();
-    // }
 }
