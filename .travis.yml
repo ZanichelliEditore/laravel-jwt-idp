@@ -14,7 +14,8 @@ before_script:
   - php artisan key:generate
   - php artisan migrate:fresh --seed --no-interaction
   - php artisan passport:install
-  - php artisan jwt:secret
+  - php artisan passport:install --no-interaction
+  - php artisan jwt:secret --no-interaction
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
