@@ -51,8 +51,6 @@ Route::prefix('v1')->group(function () {
 
         Route::get('roles', 'Manage\RoleController@all');
 
-        Route::get('employees', 'Manage\UserController@employees');
-
         Route::get('providers', 'Manage\ProviderController@all');
 
         Route::get('users/{id}', 'Manage\UserController@find')->where('id', '[0-9]+');

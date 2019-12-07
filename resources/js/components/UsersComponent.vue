@@ -21,7 +21,7 @@
             <input
               type="text"
               :class="['form-control', (!validator.username ? 'is-invalid' : '')]"
-              :disabled="!form.employee"
+              disabled
               id="input-username"
               placeholder="mario.rossi"
               name="username"
@@ -254,10 +254,6 @@ export default {
 
     filterUsers() {
       this.loadUsers();
-    },
-
-    onChangeEmployee() {
-      this.form.username = this.form.email;
     }
   }
 };

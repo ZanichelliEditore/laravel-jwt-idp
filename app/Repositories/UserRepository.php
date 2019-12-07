@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'name' => $data['name'],
             'surname' => $data['surname'],
             'password' => isset($data['password']) ? bcrypt($data['password']) : null,
-            'is_verified' => isset($data['employee']) && $data['employee'],
+            'is_verified' => false,
         ]);
     }
 

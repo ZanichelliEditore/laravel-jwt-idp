@@ -6,7 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject {
+class User extends Authenticatable implements JWTSubject
+{
 
     use Notifiable;
 
@@ -18,7 +19,7 @@ class User extends Authenticatable implements JWTSubject {
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'name', 'surname', 'is_verified', 'password', 'is_employee'
+        'username', 'email', 'name', 'surname', 'is_verified', 'password'
     ];
 
     /**
@@ -30,20 +31,19 @@ class User extends Authenticatable implements JWTSubject {
         'password', 'remember_token',
     ];
 
-    public function roles(){
+    public function roles()
+    {
         return $this->hasMany('App\Models\UserRole', 'user_id');
     }
 
-    public function attributes(){
-        return $this->hasMany('App\Models\Attribute', 'user_id');
-    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
      */
-    public function getJWTIdentifier(){
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
 
@@ -52,8 +52,8 @@ class User extends Authenticatable implements JWTSubject {
      *
      * @return array
      */
-    public function getJWTCustomClaims(){
+    public function getJWTCustomClaims()
+    {
         return array();
     }
-
 }

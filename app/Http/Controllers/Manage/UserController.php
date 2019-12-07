@@ -261,7 +261,7 @@ class UserController extends Controller
             'username' => 'required|string|max:50|unique:users',
             'name' => 'required|string|max:50',
             'surname' => 'nullable|string|max:50',
-            'email' => 'nullable|string|email|required_if:employee,0|max:255|unique:users',
+            'email' => 'required|nullable|string|email|max:255|unique:users',
         ]);
 
         return $validator;
