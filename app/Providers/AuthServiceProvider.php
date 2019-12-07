@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 
-class AuthServiceProvider extends ServiceProvider
-{
+class AuthServiceProvider extends ServiceProvider {
+
     /**
      * The policy mappings for the application.
      *
@@ -22,8 +22,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
+
         $this->registerPolicies();
 
         Passport::routes();
@@ -32,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::tokensCan([
             'manage-user' => 'Create and manage IDP users',
+            'manage-idp'  => 'Create and manage providers',
         ]);
     }
 }
