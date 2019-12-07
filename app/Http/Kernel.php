@@ -2,6 +2,10 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckRole;
+use App\Http\Middleware\CheckClientRole;
+use App\Http\Middleware\Authenticated;
+use App\Http\Middleware\RedirectIfUnauthenticated;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Passport\Http\Middleware\CheckClientCredentials;
 
@@ -65,5 +69,10 @@ class Kernel extends HttpKernel
         'client' => CheckClientCredentials::class,
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+        'checkclientrole' => CheckClientRole::class,
+        'role' => CheckRole::class,
+        'authenticated' => Authenticated::class,
+
+        'web.authenticated' => RedirectIfUnauthenticated::class,
     ];
 }
