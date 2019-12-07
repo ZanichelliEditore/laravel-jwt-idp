@@ -16,17 +16,18 @@ application passing a token. The application must use that token to retrieve the
 - In the root the project execute ``composer install``
 - In the project root execute the command ``php artisan key:generate``
 - Set a secret key (for jwt authentication) executing from command line ``php artisan jwt:secret``
+- Create passport keys (for api authentication) executing from command line ``php artisan passport:keys``
 
 ### Routes
 GET Requests
 
 - **/loginForm** shows the IDP login form. Parameter: "redirect".
 - **/registerForm** shows the IDP register form
-- **/v1/loginWithToken** retrieve the user data by token. Parameters: "token"
+- **/v1/user** retrieve the user data by token. Parameters: "token"
 - **/v1/logout** logout
 
 POST Requests
-- **/v1/login** login the user into the application. Parameters: "username" and "password".
+- **/v2/login** login the user into the application. Parameters: "username" and "password".
 - **/v1/register** register the user into the IDP. Parameters: "username", "email", "password", "password_confirmation", "name", "surname"
 
 ### Views
