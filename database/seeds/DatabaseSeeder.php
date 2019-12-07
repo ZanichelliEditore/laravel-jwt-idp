@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder {
     public function run(){
 
         DB::table('users')->insert([
+            'username' => 'mario.rossi',
             'email' => 'mario.rossi@example.com',
             'password' => Hash::make('secret'),
             'is_verified' => true,
@@ -59,7 +60,7 @@ class DatabaseSeeder extends Seeder {
             'user_id' => 1,
             'name' => 'manager',
             'secret' => 'HkZ5sCBaAKRH0B5CIlBGjNIQazfYDxi4EDth3ANa',
-            'redirect' => 'http://localhost:8081/auth/callback',
+            'redirect' => 'http://localhost:8000/auth/callback',
             'personal_access_client' => 0,
             'password_client' => 0,
             'revoked' => 0
@@ -69,7 +70,7 @@ class DatabaseSeeder extends Seeder {
             'user_id' => 2,
             'name' => 'admin',
             'secret' => '6ZWpCgKPYc93TbgKHKnZMiULFStw88lIvquDQETQ',
-            'redirect' => 'http://localhost:8081/auth/callback',
+            'redirect' => 'http://localhost:8000/auth/callback',
             'personal_access_client' => 0,
             'password_client' => 0,
             'revoked' => 0
@@ -79,7 +80,7 @@ class DatabaseSeeder extends Seeder {
             'user_id' => 3,
             'name' => 'client',
             'secret' => 'mydhRDjLRMNuubmmHfs8u2DURLEc91qoc6fS58kT',
-            'redirect' => 'http://localhost:8081/auth/callback',
+            'redirect' => 'http://localhost:8000/auth/callback',
             'personal_access_client' => 0,
             'password_client' => 0,
             'revoked' => 0
