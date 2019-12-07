@@ -1,0 +1,21 @@
+language: php
+
+php:
+  - 7.2
+
+services:
+  - mysql
+
+before_script:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS zanichelli_idp;'
+  - cp .env.example .env
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate:fresh --seed --no-interaction
+  - php artisan passport:install
+  - php artisan jwt:secret
+
+script:
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
+# after_success:
+#   - bash <(curl -s https://codecov.io/bash) -t cc056f3e-8bf3-45cc-ac7d-66b76d269173
