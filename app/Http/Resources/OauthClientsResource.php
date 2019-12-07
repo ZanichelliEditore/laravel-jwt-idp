@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoleResource extends JsonResource
+class OauthClientsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -13,12 +13,11 @@ class RoleResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
-
+    {   
         return [
-            'id' => $this->id,
-            'roleId' => $this->role->id,
-            'roleName' => $this->role->name
+            "oauth_client_id" => $this->id,
+            "oauth_name" => $this->name,
+            "roles" =>  $this->client ? json_decode($this->client->roles) : json_decode("[]")
         ];
     }
 }
