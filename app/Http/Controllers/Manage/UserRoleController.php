@@ -28,7 +28,7 @@ class UserRoleController extends Controller
     /**
      * @OA\Post(
      *     path="/v1/users/{id}/user-roles",
-     *     summary="Assigne role on department to user",
+     *     summary="Assigne role to user",
      *     description="__*Security:*__ __*can be used only by clients with 'manager' role*__",
      *     operationId="UserRole.create",
      *     tags={"User-Role"},
@@ -128,16 +128,18 @@ class UserRoleController extends Controller
         DB::commit();
         $status = ($userRoles) ? 201 : 204;
 
-        return response()->json([
-            'data' => $userRoles
-            ], $status
+        return response()->json(
+            [
+                'data' => $userRoles
+            ],
+            $status
         );
     }
 
     /**
      * @OA\Delete(
      *     path="/v1/user-role/{id}",
-     *     summary="Remove role on department to user by user-role-id",
+     *     summary="Remove role to user by user-role-id",
      *     description="__*Security:*__ __*can be used only by clients with 'manager' role*__",
      *     operationId="UserRole.delete",
      *     tags={"User-Role"},
@@ -208,8 +210,8 @@ class UserRoleController extends Controller
     /**
      * @OA\Get(
      *     path="/v1/users/{id}/user-roles",
-     *     summary="Retrieve role on department of user",
-     *     description="Retrieve role on department of user",
+     *     summary="Retrieve role of user",
+     *     description="Retrieve role of user",
      *     operationId="UserRole.retrieve-user",
      *     tags={"User-Role"},
      *     security={{"passport":{}}},
@@ -246,7 +248,8 @@ class UserRoleController extends Controller
      *     )
      * )
      */
-    public function getUserRole($id) {
+    public function getUserRole($id)
+    {
         $user = $this->userRepository->find($id);
         if (!$user) {
             return response()->json([
@@ -264,19 +267,19 @@ class UserRoleController extends Controller
      * @param int $id
      * @return Response
      */
-    public function getRoles($id) {
+    public function getRoles($id)
+    {
         $role = $this->roleRepository->find($id);
-        
+
         if (!$role) {
             return response()->json([
                 'message' => 'Role not found'
             ], 404);
         }
         $userRoles = $this->userRoleRepository->where(['role_id' => $id]);
-        
-        return response()->json([
-                'data' => $userRoles
-            ], 200);
-    }
 
+        return response()->json([
+            'data' => $userRoles
+        ], 200);
+    }
 }

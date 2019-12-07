@@ -9,7 +9,6 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\ProviderRepository;
 use App\Repositories\RepositoryInterface;
 use App\Listeners\LogoutProvidersListener;
-use App\Repositories\DepartmentRepository;
 use App\Repositories\OauthClientsRepository;
 use App\Repositories\UserRepositoryInterface;
 use App\Http\Controllers\Manage\RoleController;
@@ -17,7 +16,6 @@ use App\Http\Controllers\Manage\UserController;
 use App\Repositories\ClientRepositoryInterface;
 use App\Repositories\VerificationTokenRepository;
 use App\Http\Controllers\Manage\ProviderController;
-use App\Repositories\OauthClientsRepositoryInterface;
 use App\Http\Controllers\Manage\OauthClientsController;
 use App\Http\Controllers\JwtAuth\VerificationController;
 
@@ -55,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
             ->give(RoleRepository::class);
 
         $this->app->bind(ClientRepositoryInterface::class, ClientRepository::class);
-        
+
         $this->app->when(UserController::class)
             ->needs(RepositoryInterface::class)
             ->give(VerificationTokenRepository::class);
@@ -65,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
             ->give(VerificationTokenRepository::class);
 
         $this->app->when(OauthClientsController::class)
-        ->needs(OauthClientsRepository::class)
-        ->give(OauthClientsRepository::class);
+            ->needs(OauthClientsRepository::class)
+            ->give(OauthClientsRepository::class);
     }
 }
