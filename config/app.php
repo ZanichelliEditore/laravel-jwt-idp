@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'it',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -210,9 +210,12 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
     'ldap' => [
         'host' => env('LDAP_HOST'),
         'port' => env('LDAP_PORT'),
-    ]
+    ],
+
+    'default_provider_logout' => '/logout-idp'
 
 ];
