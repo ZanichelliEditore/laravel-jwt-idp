@@ -158,7 +158,8 @@ class UserTest extends TestCase
             'email' => 'prova@example.com',
             'name' => 'myName2',
             'surname' => 'mySurname2',
-            'is_verified' => true
+            'is_verified' => true,
+            'password' => Str::random(30)
         ]);
 
         $user = UserUtility::getAdmin();
