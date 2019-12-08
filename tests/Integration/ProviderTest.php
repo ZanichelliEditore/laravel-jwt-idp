@@ -41,7 +41,7 @@ class ProviderTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -117,7 +117,7 @@ class ProviderTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 

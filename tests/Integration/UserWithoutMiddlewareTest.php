@@ -12,33 +12,6 @@ class UserWithoutMiddlewareTest extends TestCase
     use WithoutMiddleware;
 
     /**
-     * Fail available user.
-     * @test
-     * @return void
-     */
-    public function notAvailableUsernameTest()
-    {
-        $user = factory(User::class)->create([
-            'is_verified' => true
-        ]);
-        $response = $this->json('GET', '/v1/user/available/' . $user->username);
-        $response->assertStatus(200)->assertJson(['available' => false]);
-    }
-
-    /**
-     * Success available username.
-     * @test
-     * @return void
-     */
-    public function availableUsernameTest()
-    {
-        $response = $this->json('GET', '/v1/user/available/' . Str::random(51));
-        $response->assertStatus(200)->assertJson([
-            'available' => true
-        ]);
-    }
-
-    /**
      * Success find user.
      * @test
      * @return void

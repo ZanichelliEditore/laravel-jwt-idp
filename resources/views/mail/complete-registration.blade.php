@@ -13,7 +13,7 @@
                         <p class="text-bold mb-0">Username</p>
                     </div>
                     <div>
-                        <p class="mb-0">{{ $user->username }}</p>
+                        <p class="mb-0">{{ $user->email }}</p>
                     </div>
                 </div>
                 <div class="d-flex align-items-center data-row">

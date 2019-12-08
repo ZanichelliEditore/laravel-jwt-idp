@@ -15,12 +15,4 @@ interface UserRepositoryInterface extends RepositoryInterface
      */
     public function all($query = null);
 
-
-    /**
-     * Returns true if username is available, otherwise false.
-     *
-     * @param string $username
-     * @return boolean
-     */
-    public function availableUsername(string $username);
 }

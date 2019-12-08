@@ -21,7 +21,6 @@ class UserWithoutMiddlewareTest extends TestCase
     {
         return [
             'id',
-            'username',
             'email',
             'is_verified',
             'name',
@@ -70,24 +69,6 @@ class UserWithoutMiddlewareTest extends TestCase
         $this->assertEquals($response->status(), 404);
     }
 
-    /**
-     * @test
-     * @return void
-     */
-    public function availableUsernameTest()
-    {
-        $username = Str::random(20);
-        $mock = Mockery::mock(UserRepository::class)->makePartial()
-            ->shouldReceive(['availableUsername' => true])
-            ->withAnyArgs()
-            ->once()
-            ->getMock();
-        $this->app->instance('App\Repositories\UserRepository', $mock);
-
-        $response = $this->json('GET', '/v1/user/available/' . $username);
-        $response->assertStatus(200)
-            ->assertJsonStructure(['data' => 'available']);
-    }
 
     /**
      * Fail created user.
@@ -99,7 +80,7 @@ class UserWithoutMiddlewareTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -113,7 +94,6 @@ class UserWithoutMiddlewareTest extends TestCase
         $username = 'myUsername' . Str::random(15);
 
         $body = [
-            'username' => 'user' . $username . '@example.it',
             'name' => 'myName',
             'surname' => 'mySurname',
             'email' => 'user' . $username . '@example.it',
@@ -144,7 +124,7 @@ class UserWithoutMiddlewareTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -157,7 +137,6 @@ class UserWithoutMiddlewareTest extends TestCase
                     '*' => [
                         'id',
                         'email',
-                        'username',
                         'surname',
                         'is_verified',
                     ]

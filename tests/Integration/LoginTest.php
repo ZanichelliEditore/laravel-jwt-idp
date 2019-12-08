@@ -48,7 +48,7 @@ class LoginTest extends TestCase
     {
         $user = factory(User::class)->create();
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -70,7 +70,7 @@ class LoginTest extends TestCase
             'is_verified' => true
         ]);
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
         $response->assertStatus(200)
@@ -93,7 +93,7 @@ class LoginTest extends TestCase
         ]);
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'wrong'
         ]);
         $response->assertStatus(404)
@@ -124,7 +124,7 @@ class LoginTest extends TestCase
             'is_verified' => true
         ]);
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
         ]);
         $response->assertStatus(422)->assertJsonStructure([
             'message',
@@ -261,7 +261,7 @@ class LoginTest extends TestCase
             'is_verified' => true
         ]);
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
         return ['token' => json_decode($response->getContent())->token];
@@ -275,7 +275,6 @@ class LoginTest extends TestCase
     {
         return [
             'id',
-            'username',
             'email',
             'is_verified',
             'name',

@@ -41,7 +41,7 @@ class UserTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -50,22 +50,11 @@ class UserTest extends TestCase
         $response->assertStatus(422)->assertJsonStructure([
             'message',
             'errors' => [
-                'username',
-                'name'
-            ]
-        ]);
-
-        $body = ['username' => 'prova'];
-        $response = $this->json('POST', '/admin/users', $body, $cookie);
-        $response->assertStatus(422)->assertJsonStructure([
-            'message',
-            'errors' => [
                 'name'
             ]
         ]);
 
         $body = [
-            'username' => Str::random(51),
             'name' => Str::random(51),
             'surname' => Str::random(51),
             'email' => Str::random(256)
@@ -74,7 +63,6 @@ class UserTest extends TestCase
         $response->assertStatus(422)->assertJsonStructure([
             'message',
             'errors' => [
-                'username',
                 'name',
                 'surname',
                 'email',
@@ -82,7 +70,6 @@ class UserTest extends TestCase
         ]);
 
         $body = [
-            'username' => 123,
             'name' => 123,
             'surname' => 123,
             'email' => 'NotValidEmail'
@@ -91,7 +78,6 @@ class UserTest extends TestCase
         $response->assertStatus(422)->assertJsonStructure([
             'message',
             'errors' => [
-                'username',
                 'name',
                 'surname',
                 'email'
@@ -99,7 +85,6 @@ class UserTest extends TestCase
         ]);
 
         $body = [
-            'username' => 'usertest4444@example.it',
             'name' => 'myName',
             'surname' => 'mySurname',
             'email' => null
@@ -113,14 +98,12 @@ class UserTest extends TestCase
         ]);
 
         $body = [
-            'username' => 'user@test.com',
             'name' => 'myName',
             'surname' => 'mySurname',
             'email' => 'user@test.com',
         ];
         $response = $this->json('POST', '/admin/users', $body, $cookie);
         $body = [
-            'username' => 'user@test.com',
             'name' => 'myName',
             'surname' => 'mySurname',
             'email' => 'user@test.com',
@@ -129,7 +112,6 @@ class UserTest extends TestCase
         $response->assertStatus(422)->assertJsonStructure([
             'message',
             'errors' => [
-                'username',
                 'email'
             ]
         ]);
@@ -145,7 +127,7 @@ class UserTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -153,7 +135,6 @@ class UserTest extends TestCase
         $username = 'myUsername' . Str::random(15);
 
         $body = [
-            'username' => 'user' . $username . '@example.it',
             'name' => 'myName',
             'surname' => 'mySurname',
             'email' => 'user' . $username . '@example.it',
@@ -174,7 +155,6 @@ class UserTest extends TestCase
     {
         //Prepare test fixture user with email prova@example.com
         User::create([
-            'username' => 'myUsername' . Str::random(15),
             'email' => 'prova@example.com',
             'name' => 'myName2',
             'surname' => 'mySurname2',
@@ -184,15 +164,13 @@ class UserTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
         $cookie = ['token' => json_decode($response->getContent())->token];
 
-        $username = 'myUsername' . Str::random(15);
         $body = [
-            'username' => $username,
             'name' => 'myName',
             'surname' => 'mySurname',
             'email' => 'prova@example.com',
@@ -204,17 +182,6 @@ class UserTest extends TestCase
                 'email'
             ]
         ]);;
-    }
-
-    /**
-     * Unauthrized available username.
-     * @test
-     * @return void
-     */
-    public function availableUsernameTest()
-    {
-        $response = $this->json('GET', '/v1/user/available/prova');
-        $response->assertStatus(401);
     }
 
     /**
@@ -239,7 +206,7 @@ class UserTest extends TestCase
         $n_users = User::count();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -262,7 +229,7 @@ class UserTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 

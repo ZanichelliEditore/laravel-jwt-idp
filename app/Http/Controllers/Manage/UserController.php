@@ -46,7 +46,7 @@ class UserController extends Controller
      *             mediaType="application/x-www-form-urlencoded",
      *             @OA\Schema(
      *                 type="object",
-     *                 required={"name", "username"},
+     *                 required={"name", "email"},
      *                 @OA\Property(
      *                     property="email",
      *                     description="User e-mail. It is not mandatory",
@@ -64,12 +64,6 @@ class UserController extends Controller
      *                     description="User surname",
      *                     type="string",
      *                     example="rossi"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="username",
-     *                     description="Username",
-     *                     type="string",
-     *                     example="mario.rossi"
      *                 )
      *             )
      *          )
@@ -113,7 +107,7 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        $credentials = $request->only('email', 'name', 'surname', 'username');
+        $credentials = $request->only('email', 'name', 'surname');
 
         $validator = $this->validator($credentials);
         if ($validator->fails()) {
@@ -195,73 +189,16 @@ class UserController extends Controller
         ], 200);
     }
 
-    /**
-     * @OA\Get(
-     *     path="/v1/user/available/{username}",
-     *     summary="Check if a username exists in the user table",
-     *     description="__*Security:*__ __*can be used only by clients with 'manager' role*__",
-     *     operationId="availableUsername",
-     *     tags={"User management"},
-     *     security={{"passport":{}}},
-     *     @OA\Parameter(
-     *         name="username",
-     *         in="path",
-     *         description="Username",
-     *         required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Operation successful",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Missing parameter 'username'",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=403,
-     *         description="Forbidden",
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *         )
-     *     )
-     * )
-     */
-    public function availableUsername($username)
-    {
-
-        $available = $this->userRepository->availableUsername($username);
-
-        return response()->json([
-            'available' => $available
-        ]);
-    }
-
+    
     /*
      * Returns the validator for user data
      */
     private function validator(array $data)
     {
         $validator = Validator::make($data, [
-            'username' => 'required|string|max:50|unique:users',
             'name' => 'required|string|max:50',
             'surname' => 'nullable|string|max:50',
-            'email' => 'required|nullable|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
         ]);
 
         return $validator;

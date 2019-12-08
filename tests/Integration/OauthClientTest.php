@@ -24,7 +24,7 @@ class OauthClientTest extends TestCase
         $n_oauth_clients = OauthClient::count();
         
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -48,7 +48,7 @@ class OauthClientTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -70,7 +70,7 @@ class OauthClientTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -92,7 +92,7 @@ class OauthClientTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -114,7 +114,7 @@ class OauthClientTest extends TestCase
         $user = UserUtility::getAdmin();
 
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 

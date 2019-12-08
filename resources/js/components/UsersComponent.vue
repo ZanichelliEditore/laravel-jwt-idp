@@ -16,18 +16,6 @@
               v-model="form.email"
             />
           </div>
-          <div class="form-group col-lg-6">
-            <label for="input-username">Username</label>
-            <input
-              type="text"
-              :class="['form-control', (!validator.username ? 'is-invalid' : '')]"
-              disabled
-              id="input-username"
-              placeholder="mario.rossi"
-              name="username"
-              v-model="form.username"
-            />
-          </div>
         </div>
 
         <div class="form-row">
@@ -68,7 +56,7 @@
             type="text"
             class="form-control"
             aria-label="Search input filter"
-            placeholder="Filtra per username o e-mail"
+            placeholder="Filtra per e-mail"
           />
         </div>
       </div>
@@ -77,7 +65,6 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Username</th>
               <th scope="col">E-mail</th>
               <th scope="col">Verificato</th>
               <th scope="col">Nome</th>
@@ -101,7 +88,6 @@
             </tr>
             <tr v-for="user in pagination.data" :key="user.id">
               <th scope="row">{{ user.id }}</th>
-              <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
               <td class="text-center">
                 <i v-if="user.is_verified" class="fas fa-check"></i>
@@ -132,13 +118,11 @@ export default {
     return {
       form: {
         email: null,
-        username: null,
         name: null,
         surname: null
       },
       validator: {
         email: true,
-        username: true,
         password: true,
         name: true,
         surname: true
@@ -164,9 +148,6 @@ export default {
       this.filterUsers();
     },
 
-    "form.email": function(newValue, oldValue) {
-      this.form.username = this.form.email;
-    }
   },
 
   methods: {
@@ -179,7 +160,6 @@ export default {
       axios
         .post("/admin/users", {
           email: vm.form.email,
-          username: vm.form.username,
           name: vm.form.name,
           surname: vm.form.surname
         })
@@ -201,7 +181,6 @@ export default {
 
     validate: function() {
       this.validator.email = this.validateEmail(this.form.email);
-      this.validator.username = !!this.form.username;
       this.validator.name = !!this.form.name;
       this.validator.surname = !!this.form.surname;
 
@@ -213,7 +192,7 @@ export default {
         return false;
       }
 
-      return this.form.username && this.form.name && this.form.surname;
+      return this.form.email && this.form.name && this.form.surname;
     },
 
     validateEmail: function validateEmail(email) {
@@ -223,7 +202,6 @@ export default {
 
     resetForm: function() {
       this.form.email = null;
-      this.form.username = null;
       this.form.name = null;
       this.form.surname = null;
     },

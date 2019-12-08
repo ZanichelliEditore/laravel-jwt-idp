@@ -27,7 +27,6 @@ class VerificationTest extends TestCase
 
 
         $user = User::create([
-            'username' => 'myUsername' . Str::random(15),
             'email' => Str::random(30) . '@example.com',
             'name' => 'myName2',
             'surname' => 'mySurname2',
@@ -78,7 +77,6 @@ class VerificationTest extends TestCase
     public function validationTokenTest()
     {
         $user = User::create([
-            'username' => 'myUsername' . Str::random(15),
             'email' => Str::random(30) . '@example.com',
             'name' => 'myName2',
             'surname' => 'mySurname2',

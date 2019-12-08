@@ -16,11 +16,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function create(array $data)
     {
         return User::create([
-            'username' => $data['username'],
-            'email' => isset($data['email']) ? $data['email'] : null,
+            'email' => $data['email'],
             'name' => $data['name'],
-            'surname' => $data['surname'],
-            'password' => isset($data['password']) ? bcrypt($data['password']) : null,
+            'surname' => isset($data['surname']) ? $data['surname'] : null,
+            'password' => bcrypt($data['password']),
             'is_verified' => false,
         ]);
     }
@@ -48,8 +47,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             return User::paginate(10);
         }
 
-        return User::where('username', 'like', '%' . $query . '%')
-            ->orWhere('email', 'like', '%' . $query . '%')
+        return User::where('email', 'like', '%' . $query . '%')
             ->paginate(10);
     }
 
@@ -65,14 +63,5 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::where('id', $id)->update($data);
     }
 
-    /**
-     * Returns true if username is available, otherwise false.
-     *
-     * @param string $username
-     * @return boolean
-     */
-    public function availableUsername(string $username)
-    {
-        return User::where('username', $username)->doesntExist();
-    }
+
 }

@@ -34,7 +34,6 @@ Route::prefix('v1')->group(function () {
 
         Route::delete('user-role/{id}', 'Manage\UserRoleController@delete')->where(['id' => '[0-9]+']);
 
-        Route::get('user/available/{username}', 'Manage\UserController@availableUsername');
     });
 
     // Routes to manage idp

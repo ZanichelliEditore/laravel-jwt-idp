@@ -28,14 +28,14 @@ GET Requests
 
 POST Requests
 - **/v2/login** login the user into the application. Parameters: "username" and "password".
-- **/v1/register** register the user into the IDP. Parameters: "username", "email", "password", "password_confirmation", "name", "surname"
+- **/v1/register** register the user into the IDP. Parameters: "email", "password", "password_confirmation", "name", "surname"
 
 ### Views
 There are 2 default views: login form and register form.
 
 ### Database
 The IDP manages users using 3 table: users, users_roles, roles.
-In the users tables are stored basic users data like email, username, password,
+In the users tables are stored basic users data like email, password,
 name, surname, is_verified. Each user can have a role or many roles associated;
 it can be usefull in a context with RBAC (Role-based access control).
 
@@ -45,7 +45,6 @@ it can be usefull in a context with RBAC (Role-based access control).
 {
     "user": {
         "id": 1,
-        "username": "mario.rossi",
         "email": "mario.rossi@example.com",
         "is_verified": 1,
         "name": "Mario",

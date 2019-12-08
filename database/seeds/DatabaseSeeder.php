@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder {
     public function run(){
 
         DB::table('users')->insert([
-            'username' => 'mario.rossi',
             'email' => 'mario.rossi@example.com',
             'password' => Hash::make('secret'),
             'is_verified' => true,

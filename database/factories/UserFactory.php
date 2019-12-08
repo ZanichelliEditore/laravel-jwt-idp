@@ -15,7 +15,6 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
-        'username'=> $faker->userName,
         'name' => $faker->name,
         'surname' => $faker->name,
         'email' => $faker->unique()->safeEmail,

@@ -31,7 +31,7 @@ class LoginWithoutMiddlewareTest extends TestCase
         $request = new LoginRequest([], [], [], [], [], ['REMOTE_ADDR' => '127.0.0.1']);
 
         $request->merge([
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -55,7 +55,7 @@ class LoginWithoutMiddlewareTest extends TestCase
         $request = new LoginRequest([], [], [], [], [], ['REMOTE_ADDR' => '127.0.0.1']);
 
         $request->merge([
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
 
@@ -74,7 +74,7 @@ class LoginWithoutMiddlewareTest extends TestCase
             'is_verified' => true
         ]);
         $response = $this->json('POST', 'v2/login', [
-            'username' => $user->username,
+            'username' => $user->email,
             'password' => 'secret'
         ]);
         $cookies = ['token' => json_decode($response->getContent())->token];
