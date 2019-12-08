@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CheckClientRoleTest extends TestCase
 {
-    const URL = "/v1/user/available/";
 
     const GRANT_TYPE = 'client_credentials';
     const HEADER_AUTH_NAME = 'HTTP_Authorization';
@@ -97,7 +96,7 @@ class CheckClientRoleTest extends TestCase
             self::HEADER_AUTH_NAME => self::HEADER_AUTH_TYPE . ' ' . $this->getToken($scopes, self::ADMIN_EXAMPLE['id'], self::ADMIN_EXAMPLE['secret'])
         ];
 
-        $response = $this->call('GET', env('APP_URL') . '/v1/user/available/test', [], [], [], $header);
+        $response = $this->call('GET', env('APP_URL') . '/v1/roles', [], [], [], $header);
         $this->assertEquals(200, $response->status());
         $this->assertEquals(json_encode(['available' => true]), $response->getContent());
     }
@@ -114,7 +113,7 @@ class CheckClientRoleTest extends TestCase
             self::HEADER_AUTH_NAME => self::HEADER_AUTH_TYPE . ' ' . $this->getToken($scopes, self::MANAGER_EXAMPLE['id'], self::MANAGER_EXAMPLE['secret'])
         ];
 
-        $response = $this->call('GET', env('APP_URL') . '/v1/user/available/test', [], [], [], $header);
+        $response = $this->call('GET', env('APP_URL') . '/roles', [], [], [], $header);
         $this->assertEquals(200, $response->status());
         $this->assertEquals(json_encode(['available' => true]), $response->getContent());
     }
@@ -148,7 +147,7 @@ class CheckClientRoleTest extends TestCase
             self::HEADER_AUTH_NAME => self::HEADER_AUTH_TYPE . ' ' . $this->getToken($scopes, self::CLIENT_EXAMPLE['id'], self::CLIENT_EXAMPLE['secret'])
         ];
 
-        $response = $this->call('GET', env('APP_URL') . '/v1/user/available/test', [], [], [], $header);
+        $response = $this->call('GET', env('APP_URL') . '/roles', [], [], [], $header);
         $this->assertEquals(403, $response->status());
         $this->assertEquals(json_encode(self::FORBIDDEN_MESSAGE), $response->getContent());
 
