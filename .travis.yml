@@ -14,7 +14,7 @@ before_script:
   - php artisan key:generate
   - php artisan migrate:fresh --seed --no-interaction
   - php artisan passport:install
-  - php artisan passport:keys --no-interaction
+  - php artisan passport:keys --force --no-interaction
   - php artisan jwt:secret --no-interaction
 
 script:
