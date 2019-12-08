@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Cookie as FacadeCookie;
 class LoginController extends Controller
 {
 
+    public function username(){
+        return 'email';
+    }
+    
     /**
      * Shows the login form or redirect the user to the application if he is authenticated.
      *
