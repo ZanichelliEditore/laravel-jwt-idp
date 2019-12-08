@@ -30,7 +30,6 @@ class VerificationTest extends TestCase
             'email' => Str::random(30) . '@example.com',
             'name' => 'myName2',
             'surname' => 'mySurname2',
-            'password' => Str::random(30),
             'is_verified' => true
         ]);
 
@@ -80,7 +79,6 @@ class VerificationTest extends TestCase
         $user = User::create([
             'email' => Str::random(30) . '@example.com',
             'name' => 'myName2',
-            'password' => Str::random(30),
             'surname' => 'mySurname2',
             'is_verified' => true
         ]);

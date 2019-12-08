@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 class User extends Migration
 {
     /**
-     * Run the migrations.
+     * Run the migrations.->nullable();
      *
      * @return void
      */
@@ -22,7 +22,7 @@ class User extends Migration
 
             $table->increments('id');
             $table->string('email', 60)->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->string('name', 50);
             $table->string('surname', 50);

@@ -50,7 +50,8 @@ class UserTest extends TestCase
         $response->assertStatus(422)->assertJsonStructure([
             'message',
             'errors' => [
-                'name'
+                'name',
+                'email'
             ]
         ]);
 
@@ -100,14 +101,10 @@ class UserTest extends TestCase
         $body = [
             'name' => 'myName',
             'surname' => 'mySurname',
-            'email' => 'user@test.com',
+            'email' => 'user@test.com'
         ];
         $response = $this->json('POST', '/admin/users', $body, $cookie);
-        $body = [
-            'name' => 'myName',
-            'surname' => 'mySurname',
-            'email' => 'user@test.com',
-        ];
+        $response->assertStatus(200);
         $response = $this->json('POST', '/admin/users', $body, $cookie);
         $response->assertStatus(422)->assertJsonStructure([
             'message',
@@ -158,8 +155,7 @@ class UserTest extends TestCase
             'email' => 'prova@example.com',
             'name' => 'myName2',
             'surname' => 'mySurname2',
-            'is_verified' => true,
-            'password' => Str::random(30)
+            'is_verified' => true
         ]);
 
         $user = UserUtility::getAdmin();

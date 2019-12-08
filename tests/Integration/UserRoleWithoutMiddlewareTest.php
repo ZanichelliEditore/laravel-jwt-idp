@@ -25,7 +25,7 @@ class UserRoleWithoutMiddlewareTest extends TestCase
         $user = factory(User::class)->create();
         $userId = $user->id;
         $user->delete();
-        $response = $this->json('POST', '/v1/users/' . $userId . '/user-roles', ['role_id' => 1]);
+        $response = $this->json('POST', '/v1/users/' . $userId . '/user-roles', [['role_id' => 1]]);
         $response->assertStatus(422)
             ->assertJsonStructure([
                 'message',
@@ -37,7 +37,7 @@ class UserRoleWithoutMiddlewareTest extends TestCase
         ]);
 
 
-        $response = $this->json('POST', '/v1/users/' . $user->id . '/user-roles', ['role_id' => "kdufyow"]);
+        $response = $this->json('POST', '/v1/users/' . $user->id . '/user-roles', [['role_id' => "kdufyow"]]);
         $response->assertStatus(422)
             ->assertJsonStructure([
                 'message',
@@ -47,7 +47,7 @@ class UserRoleWithoutMiddlewareTest extends TestCase
         $role = factory(Role::class)->create();
         $roleId = $role->id;
         $role->delete();
-        $response = $this->json('POST', '/v1/users/' . $user->id . '/user-roles', ['role_id' => $roleId]);
+        $response = $this->json('POST', '/v1/users/' . $user->id . '/user-roles', [['role_id' => $roleId]]);
         $response->assertStatus(422)
             ->assertJsonStructure([
                 'message',
@@ -74,7 +74,7 @@ class UserRoleWithoutMiddlewareTest extends TestCase
             ->getMock();
         $this->app->instance('App\Repositories\UserRepository', $mockUser);
 
-        $response = $this->json('POST', '/v1/users/1/user-roles', ['role_id' => 1]);
+        $response = $this->json('POST', '/v1/users/1/user-roles', [['role_id' => 1]]);
         $response->assertStatus(204);
     }
 
@@ -100,7 +100,7 @@ class UserRoleWithoutMiddlewareTest extends TestCase
             ->getMock();
         $this->app->instance('App\Repositories\UserRepository', $mockUser);
 
-        $response = $this->json('POST', '/v1/users/1/user-roles', ['role_id' => 1]);
+        $response = $this->json('POST', '/v1/users/1/user-roles', [['role_id' => 1]]);
         $response->assertStatus(503)
             ->assertJsonStructure([
                 'message'

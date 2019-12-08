@@ -19,7 +19,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'email' => $data['email'],
             'name' => $data['name'],
             'surname' => isset($data['surname']) ? $data['surname'] : null,
-            'password' => bcrypt($data['password']),
+            'password' => isset($data['password']) ? bcrypt($data['password']) : null,
             'is_verified' => false,
         ]);
     }
@@ -62,6 +62,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::where('id', $id)->update($data);
     }
-
-
 }

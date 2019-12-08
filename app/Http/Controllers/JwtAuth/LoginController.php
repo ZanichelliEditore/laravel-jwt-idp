@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Cookie as FacadeCookie;
 class LoginController extends Controller
 {
 
-    public function username(){
-        return 'email';
-    }
-    
     /**
      * Shows the login form or redirect the user to the application if he is authenticated.
      *
@@ -94,7 +90,6 @@ class LoginController extends Controller
             Log::error($e->getMessage());
             return $this->createResponse(500, __('auth.err-jwt'));
         }
-
         $user = auth()->user();
 
         if (!$user->is_verified) {
@@ -190,6 +185,8 @@ class LoginController extends Controller
 
     private function retrieveToken(array $credentials)
     {
+        $credentials['email'] = $credentials['username'];
+        unset($credentials['username']);
         return auth()->attempt($credentials);
     }
 

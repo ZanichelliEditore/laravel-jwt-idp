@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Manage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Services\Mailer;
-use App\Models\VerificationToken;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Repositories\RepositoryInterface;
@@ -108,7 +108,6 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $credentials = $request->only('email', 'name', 'surname');
-
         $validator = $this->validator($credentials);
         if ($validator->fails()) {
             return response()->json([
@@ -121,13 +120,13 @@ class UserController extends Controller
 
         try {
             $user = $this->userRepository->create($credentials);
-
             $verificationToken = $this->verificationTokenRepository->create([
                 'token' => Str::random(60),
                 'user_id' => $user->id
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::info($e);
             return response()->json([
                 'message' => 'Error during saving user'
             ], 500);
@@ -189,7 +188,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    
+
     /*
      * Returns the validator for user data
      */
