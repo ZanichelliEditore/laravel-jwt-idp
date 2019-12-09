@@ -24,6 +24,7 @@ application passing a token. The application must use that token to retrieve the
 - In the project root execute the command `php artisan key:generate`
 - Set a secret key (for jwt authentication) executing from command line `php artisan jwt:secret`
 - Create passport keys (for api authentication) executing from command line `php artisan passport:install`
+- Compile vuejs view with _**yarn**_ and use `yarn dev` (or use `npm run dev` with _**npm**_)
 
 ### Routes
 
