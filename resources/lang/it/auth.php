@@ -7,7 +7,6 @@ return [
     'err-login' => 'E-mail o password errati.',
     'err-jwt' => 'Errore durante il login. Riprovare più tardi',
     'err-fields' => 'Rimepire correttamente tutti i campi obbligatori',
-    'err-verification-code' => 'Errore durante la verifica dell\'account',
 
     'label-email' => 'Indirizzo e-mail',
     'label-enter-email' => 'Inserisci la tua e-mail',
@@ -22,8 +21,12 @@ return [
     'label-enter-surname' => 'Inserisci il cognome',
     'label-sign-up' => 'Registrati',
     'label-login' => 'Accedi',
-    'label-registration-success' => 'Registrazione avvenuta con successo! Accedi alla tua casella di posta per verificare la tua e-mail',
-    'label-account-actived' => 'Account attivato correttamente',
     'label-logout' => 'Esci',
-    'label-logged' => 'sei autenticato'
+    'label-logged' => 'sei autenticato',
+
+    'user-error' => 'Utente non trovato',
+    'token-expired' => 'Token scaduto',
+    'token-invalid' => 'Token invalido',
+    'token-error' => 'Token invalido',
+    'token-absent' => 'Token assente'
 ];

@@ -1,46 +1,36 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Laravel IdentityProvider",
+        "title": "Zanichelli API IdentityProvider",
         "description": "REST APIs to use SSO (single-sign-on) for applications ",
         "contact": {
-            "name": "Zanichelli DEV team"
+            "name": "Zanichelli DEV team",
+            "email": "gsiciliano@zanichelli.it"
         },
         "version": "1.0.0"
     },
-    "servers": [
-        {
-            "url": "http://laravel-idp.local",
-            "description": "Development server"
-        }
-    ],
     "paths": {
-        "/v1/login": {
+        "/v2/login": {
             "post": {
                 "tags": [
                     "JWT Auth"
                 ],
                 "summary": "generate a JWT token",
                 "description": "Use to generate access JWT token for user auth",
-                "operationId": "login",
+                "operationId": "v2/login",
                 "requestBody": {
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
                                 "properties": {
-                                    "email": {
-                                        "description": "User e-mail",
-                                        "type": "string",
-                                        "example": "mario.rossi@example.com"
+                                    "username": {
+                                        "description": "Username",
+                                        "type": "string"
                                     },
                                     "password": {
                                         "description": "User password",
                                         "type": "string",
-                                        "example": "secret"
+                                        "format": "password"
                                     }
                                 },
                                 "type": "object"
@@ -54,18 +44,24 @@
                         "content": {
                             "application/json": {}
                         }
+                    },
+                    "404": {
+                        "description": "Authentication error",
+                        "content": {
+                            "application/json": {}
+                        }
                     }
                 }
             }
         },
-        "/v1/loginWithToken": {
+        "/v1/user": {
             "get": {
                 "tags": [
                     "JWT Auth"
                 ],
                 "summary": "retrieve user info in json format",
-                "description": "Use to retrieve user info with roles",
-                "operationId": "loginWithToken",
+                "description": "Use to retrieve user info with roles and departments",
+                "operationId": "userByToken",
                 "parameters": [
                     {
                         "name": "token",
@@ -85,6 +81,94 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "User management"
+                ],
+                "summary": "create a new user",
+                "description": "__*Security:*__ __*can be used only by clients with 'manager' role*__",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "username"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "User e-mail. It is not mandatory",
+                                        "type": "string",
+                                        "example": "mario.rossi@email.com"
+                                    },
+                                    "name": {
+                                        "description": "User name",
+                                        "type": "string",
+                                        "example": "mario"
+                                    },
+                                    "surname": {
+                                        "description": "User surname",
+                                        "type": "string",
+                                        "example": "rossi"
+                                    },
+                                    "username": {
+                                        "description": "Username",
+                                        "type": "string",
+                                        "example": "mario.rossi"
+                                    },
+                                    "employee": {
+                                        "description": "If user is employee the value must be 1, otherwise 0.",
+                                        "type": "string",
+                                        "enum": [
+                                            0,
+                                            1
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
             }
         },
         "/v1/logout": {
@@ -116,44 +200,25 @@
                 }
             }
         },
-        "/v1/register": {
+        "/v1/login": {
             "post": {
                 "tags": [
                     "JWT Auth"
                 ],
-                "summary": "register new user",
-                "description": "Use to create new user",
-                "operationId": "register",
+                "summary": "generate a JWT token - @deprecated: use /v2/login",
+                "description": "Use to generate access JWT token for user auth",
+                "operationId": "V1/login",
                 "requestBody": {
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "required": [
-                                    "email",
-                                    "password",
-                                    "password_confirmation",
-                                    "name",
-                                    "surname"
-                                ],
                                 "properties": {
-                                    "email": {
-                                        "description": "User e-mail",
+                                    "username": {
+                                        "description": "User name",
                                         "type": "string"
                                     },
                                     "password": {
                                         "description": "User password",
-                                        "type": "string"
-                                    },
-                                    "password_confirmation": {
-                                        "description": "Confirm password",
-                                        "type": "string"
-                                    },
-                                    "name": {
-                                        "description": "User name",
-                                        "type": "string"
-                                    },
-                                    "surname": {
-                                        "description": "User surname",
                                         "type": "string"
                                     }
                                 },
@@ -168,8 +233,702 @@
                         "content": {
                             "application/json": {}
                         }
+                    },
+                    "404": {
+                        "description": "Authentication error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/v1/loginWithToken": {
+            "get": {
+                "tags": [
+                    "JWT Auth"
+                ],
+                "summary": "retrieve user info in json format - @deprecated: use /v1/user",
+                "description": "Use to retrieve user info with roles and departments",
+                "operationId": "loginWithToken",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "JWT token vaule",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/v1/complete-registration": {
+            "post": {
+                "tags": [
+                    "JWT Auth"
+                ],
+                "summary": "Active user",
+                "description": "Activate user using token received in the email",
+                "operationId": "VerificationController.verify",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "description": "Token",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "500": {
+                        "description": "General error",
+                        "content": {
+                            "application/json": {}
+                        }
                     }
                 }
+            }
+        },
+        "/v1/departments": {
+            "get": {
+                "tags": [
+                    "Departments"
+                ],
+                "summary": "list of departments",
+                "description": "Returns the entire list of departments",
+                "operationId": "all",
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/v1/providers": {
+            "get": {
+                "tags": [
+                    "Providers"
+                ],
+                "summary": "list of providers",
+                "description": "Returns the entire list of providers.",
+                "operationId": "all",
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Providers"
+                ],
+                "summary": "Create a new provider",
+                "description": "__*Security:*__ __*can be used only by clients with 'admin' role*__",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "domain": {
+                                        "description": "Provider domain",
+                                        "type": "string",
+                                        "example": "portale.zanichelli.it"
+                                    },
+                                    "logoutUrl": {
+                                        "description": "URL for logout",
+                                        "type": "string",
+                                        "example": "https://portale.zanichelli.it/logoutUser/"
+                                    },
+                                    "username": {
+                                        "description": "username",
+                                        "type": "string",
+                                        "example": "4d8d58c9s99"
+                                    },
+                                    "password": {
+                                        "description": "password",
+                                        "type": "string",
+                                        "example": "4sc8s28v4d8s"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/v1/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "list of roles",
+                "description": "Returns the entire list of roles",
+                "operationId": "all",
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Create a new role",
+                "description": "__*Security:*__ __*can be used only by clients with 'admin' role*__",
+                "operationId": "RoleController.create",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Role name",
+                                        "type": "string",
+                                        "example": "ADMIN_IDP"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Invalid scope or client role, Forbidden",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": [
+                            "manage-idp"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/v1/roles/{id}": {
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Remove role by id",
+                "description": "__*Security:*__ __*can be used only by clients with 'admin' role*__",
+                "operationId": "RoleController.delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Role id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Error on deleting",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Invalid scope or client role, Forbidden",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": [
+                            "manage-idp"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/v1/users/{id}": {
+            "get": {
+                "tags": [
+                    "User management"
+                ],
+                "summary": "Returns user by id",
+                "description": "Returns user details by id",
+                "operationId": "find",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/v1/user/available/{username}": {
+            "get": {
+                "tags": [
+                    "User management"
+                ],
+                "summary": "Check if a username exists in the user table",
+                "description": "__*Security:*__ __*can be used only by clients with 'manager' role*__",
+                "operationId": "availableUsername",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Missing parameter 'username'",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/v1/employees": {
+            "get": {
+                "tags": [
+                    "User management"
+                ],
+                "summary": "returns all employees",
+                "description": "Returns the list of employees",
+                "operationId": "employees",
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/v1/users/{id}/user-roles": {
+            "get": {
+                "tags": [
+                    "User-Role"
+                ],
+                "summary": "Retrieve role on department of user",
+                "description": "Retrieve role on department of user",
+                "operationId": "UserRole.retrieve-user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "User-Role"
+                ],
+                "summary": "Assigne role on department to user",
+                "description": "__*Security:*__ __*can be used only by clients with 'manager' role*__",
+                "operationId": "UserRole.create",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "department_id": {
+                                            "description": "Id of department",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "role_id": {
+                                            "description": "Id of role",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "204": {
+                        "description": "Operation successfull, user already has role passed",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Invalid scope or client role, Forbidden",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/v1/user-role/{id}": {
+            "delete": {
+                "tags": [
+                    "User-Role"
+                ],
+                "summary": "Remove role on department to user by user-role-id",
+                "description": "__*Security:*__ __*can be used only by clients with 'manager' role*__",
+                "operationId": "UserRole.delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User-role id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation successful",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Error on saving",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "403": {
+                        "description": "Invalid scope or client role, Forbidden",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "in": "header",
+                "flows": {
+                    "clientCredentials": {
+                        "tokenUrl": "http://localhost:8083/oauth/token",
+                        "scopes": []
+                    }
+                },
+                "scheme": [
+                    "http",
+                    "https"
+                ]
             }
         }
     },

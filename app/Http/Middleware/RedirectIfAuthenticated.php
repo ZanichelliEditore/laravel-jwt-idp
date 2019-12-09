@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
@@ -15,20 +15,20 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null){
-
-        $token = $request->session()->get('token');
-
-        if(!$token){
-            return null;
+    public function handle($request, Closure $next, $guard = null)
+    {
+        if (!Auth::guard($guard)->check()) {
+            return $next($request);
         }
 
-        JWTAuth::setToken($token);
-        if(JWTAuth::check()){
-            return redirect('loginForm');
-        }
+        $redirectUrl = $request->input('redirect');
 
-        return $next($request);
+        if (empty($redirectUrl)) {
+            return redirect('authenticated');
+        }
+        $token = auth()->getToken();
+        $url = $redirectUrl . '?token=' . $token;
+
+        return redirect()->away($url);
     }
-
 }

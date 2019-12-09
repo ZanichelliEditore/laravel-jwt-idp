@@ -1,0 +1,36 @@
+#nav-bar {
+    height: 74px;
+    z-index: 100;
+}
+
+#side-menu {
+    -webkit-box-shadow: 2px 0px 4px 0px rgba(0,0,0,0.26);
+    -moz-box-shadow: 2px 0px 4px 0px rgba(0,0,0,0.26);
+    box-shadow: 2px 0px 4px 0px rgba(0,0,0,0.26);
+    width: 300px;
+    margin-top: 73px !important;
+    background-color: #eeeeee;
+}
+
+#content {
+    padding-top: 120px;
+    margin-left: 300px;
+}
+
+.no-text-decoration:hover {
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    background-color: #e0e0e0;
+}
+
+body {
+    position: relative;
+    min-width: 800px;
+    overflow-x: hidden;
+}
+
+#content {
+    /*min-width: 600px;*/
+}
