@@ -16,32 +16,31 @@ with a middleware that checks if the user exists in the session. If the user is 
 redirect the user to the IDP login. After the login success the IDP will redirect the user to the
 application passing a token. The application must use that token to retrieve the user data.
 
-### Installation
+### Setup project
 
 - Clone the project
 - Duplicate the file .env.example and change the name in .env
 - In the root the project execute `composer install`
 - In the project root execute the command `php artisan key:generate`
 - Set a secret key (for jwt authentication) executing from command line `php artisan jwt:secret`
-- Create passport keys (for api authentication) executing from command line `php artisan passport:keys`
+- Create passport keys (for api authentication) executing from command line `php artisan passport:install`
 
 ### Routes
 
 GET Requests
 
 - **/loginForm** shows the IDP login form. Parameter: "redirect".
-- **/registerForm** shows the IDP register form
 - **/v1/user** retrieve the user data by token. Parameters: "token"
 - **/v1/logout** logout
 
 POST Requests
 
 - **/v2/login** login the user into the application. Parameters: "username" and "password".
-- **/v1/register** register the user into the IDP. Parameters: "email", "password", "password_confirmation", "name", "surname"
 
 ### Views
 
-There are 2 default views: login form and register form.
+There is 1 default views: login form.
+There is also an admin section (**/admin**) through which you can manage idp system; the view is available for "ADMIN_IDP" user-role.
 
 ### Database
 
