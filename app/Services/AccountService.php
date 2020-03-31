@@ -9,15 +9,16 @@
 namespace App\Services;
 
 
-use App\Events\RegistrationEvent;
-use App\Exceptions\SqlException;
+use Exception;
+use Illuminate\Support\Str;
 use App\Models\Account\User;
+use App\Exceptions\SqlException;
+use App\Events\RegistrationEvent;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Account\VerificationCode;
 use App\Services\Interfaces\IAccountService;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class AccountService implements IAccountService {
 
@@ -51,7 +52,7 @@ class AccountService implements IAccountService {
 
             $verificationCode = VerificationCode::create([
                 'user_id' => $user->id,
-                'verification_code' => str_random(30)
+                'verification_code' => Str::random(30)
             ]);
         } catch (Exception $e){
             Log::error($e->getMessage());
